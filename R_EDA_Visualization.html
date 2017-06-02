@@ -1,0 +1,1244 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>EDA with R</title>
+
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="generator" content="pandoc" />
+
+
+
+  <meta name="date" content="2017-06-17" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+
+  <link rel="stylesheet" media="all" href="R_EDA_Visualization_files/ioslides-13.5.1/fonts/fonts.css">
+
+  <link rel="stylesheet" media="all" href="R_EDA_Visualization_files/ioslides-13.5.1/theme/css/default.css">
+  <link rel="stylesheet" media="only screen and (max-device-width: 480px)" href="R_EDA_Visualization_files/ioslides-13.5.1/theme/css/phone.css">
+
+  <base target="_blank">
+
+  <script type="text/javascript">
+    var SLIDE_CONFIG = {
+      // Slide settings
+      settings: {
+                title: 'EDA with R',
+                        subtitle: 'Data Visualization with <strong>ggplot2</strong>',
+                useBuilds: true,
+        usePrettify: true,
+        enableSlideAreas: true,
+        enableTouch: true,
+                      },
+
+      // Author information
+      presenters: [
+            {
+        name:  'Alger 與其他作者群 <span class="citation">@PIXNET</span> Workshop' ,
+        company: '',
+        gplus: '',
+        twitter: '',
+        www: '',
+        github: ''
+      },
+            ]
+    };
+  </script>
+
+  <style type="text/css">
+
+    b, strong {
+      font-weight: bold;
+    }
+
+    em {
+      font-style: italic;
+    }
+
+    slides > slide {
+      -webkit-transition: all 0.4s ease-in-out;
+      -moz-transition: all 0.4s ease-in-out;
+      -o-transition: all 0.4s ease-in-out;
+      transition: all 0.4s ease-in-out;
+    }
+
+    .auto-fadein {
+      -webkit-transition: opacity 0.6s ease-in;
+      -webkit-transition-delay: 0.4s;
+      -moz-transition: opacity 0.6s ease-in 0.4s;
+      -o-transition: opacity 0.6s ease-in 0.4s;
+      transition: opacity 0.6s ease-in 0.4s;
+      opacity: 0;
+    }
+
+  </style>
+
+  <link rel="stylesheet" href="css/dsp.css" type="text/css" />
+
+  <script src="R_EDA_Visualization_files/htmlwidgets-0.8/htmlwidgets.js"></script>
+  <script src="R_EDA_Visualization_files/plotly-binding-4.7.0/plotly.js"></script>
+  <script src="R_EDA_Visualization_files/typedarray-0.1/typedarray.min.js"></script>
+  <script src="R_EDA_Visualization_files/jquery-1.11.3/jquery.min.js"></script>
+  <link href="R_EDA_Visualization_files/crosstalk-1.0.0/css/crosstalk.css" rel="stylesheet" />
+  <script src="R_EDA_Visualization_files/crosstalk-1.0.0/js/crosstalk.min.js"></script>
+  <link href="R_EDA_Visualization_files/plotlyjs-1.27.1/plotly-htmlwidgets.css" rel="stylesheet" />
+  <script src="R_EDA_Visualization_files/plotlyjs-1.27.1/plotly-latest.min.js"></script>
+</head>
+
+<body style="opacity: 0">
+
+<slides class="layout-widescreen">
+
+  <slide class="title-slide segue nobackground">
+        <!-- The content of this hgroup is replaced programmatically through the slide_config.json. -->
+    <hgroup class="auto-fadein">
+      <h1 data-config-title><!-- populated from slide_config.json --></h1>
+      <h2 data-config-subtitle><!-- populated from slide_config.json --></h2>
+      <p data-config-presenter><!-- populated from slide_config.json --></p>
+            <p style="margin-top: 6px; margin-left: -2px;">2017-06-17</p>
+          </hgroup>
+  </slide>
+
+<slide class='segue dark nobackground level1'><hgroup class = 'auto-fadein'><h2>課程教材作者群</h2></hgroup><article >
+
+</article></slide><slide class=''><hgroup><h2>課程教材作者群</h2></hgroup><article  id="-1">
+
+<style>
+  .col2 {
+    columns: 2 200px;         /* number of columns and width in pixels*/
+    -webkit-columns: 2 200px; /* chrome, safari */
+    -moz-columns: 2 200px;    /* firefox */
+  }
+  .col3 {
+    columns: 3 100px;
+    -webkit-columns: 3 100px;
+    -moz-columns: 3 100px;
+  }
+</style>
+
+<p>名人堂：</p>
+
+<div class="col2">
+<ul>
+<li><center>
+
+Johnson Hsieh <br><img src = 'img/johnson.jpg' height = 120>
+
+</center></li>
+<li><center>
+
+Wush Wu <br><img src = 'img/wush.jpg' height = 120>
+
+</center>
+
+<br><br><br><br><br></li>
+<li><center>
+
+Rafe C. H. Liu <br><img src = 'img/rafe.jpg' height = 100>
+
+</center></li>
+<li><center>
+
+George <br><img src = 'img/george.jpg' height = 100>
+
+</center></li>
+<li><center>
+
+Hsiao Ling <br><img src = 'img/hl.jpg' height = 100>
+
+</center></li>
+</ul></div>
+
+</article></slide><slide class='segue dark nobackground level1'><hgroup class = 'auto-fadein'><h2>Speaker</h2></hgroup><article  id="speaker">
+
+</article></slide><slide class=''><hgroup><h2>Alger, Yang</h2></hgroup><article  id="alger-yang">
+
+<div style='float:left;width:48%;'>
+
+<p><strong>苟且的役男, Junior Data Analyst</strong></p>
+
+<p>
+
+<ul>
+<li>Master of Statistics in NCCU</li>
+<li>RA in NCCU</li>
+<li>Taiwan Healthcare Database Data Analysis Lab</li>
+<li>Data Analyst Intern in DSP</li>
+<li>R Course Assistant in TDSF</li>
+<li>Champion of 2016 Aisa Open Data Hackathon</li>
+</ul>
+
+<h4><strong>Skills</strong></h4>
+
+<p>
+
+<ul>
+<li>R, SQL, PYTHON, MLDM,&#8230;</li>
+</ul>
+
+</div>
+
+<div style="float:left;width:48%;">
+<p><img src='img/lofu.jpg' style='height: 450px'></img></p></div>
+
+</article></slide><slide class='segue dark nobackground level1'><hgroup class = 'auto-fadein'><h2>課程綱要</h2></hgroup><article >
+
+</article></slide><slide class=''><hgroup><h2>Agenda</h2></hgroup><article  id="agenda">
+
+<div style="float:left;width:48%;">
+<ul>
+<li>Data Visualization</li>
+<li><code>ggplot2</code> in R
+
+<ul>
+<li>基本架構介紹</li>
+<li>起手式(基本語法)</li>
+<li>應用(各種圖形的呈現)
+
+<ul>
+<li><code>Bar</code></li>
+<li><code>Line</code></li>
+<li><code>Histogram</code></li>
+<li><code>Boxplot</code></li>
+<li><code>Point</code></li>
+<li><code>Heatmap</code></li>
+</ul></li>
+<li>進階技巧</li>
+</ul></li>
+</ul></div>
+
+<div style="float:left;width:48%;">
+<ul>
+<li>互動式視覺化呈現</li>
+<li>Bonus</li>
+</ul>
+
+<p><img src='img/a2.jpg' style='height: 350px'></img></p></div>
+
+</article></slide><slide class=''><hgroup><h2>Data Visualization</h2></hgroup><article  id="data-visualization">
+
+<div style="float:left;width:48%;">
+<ul>
+<li>清晰有效地傳達與溝通訊息</li>
+<li>教學、研究、宣傳</li>
+<li>美學、功能兼顧</li>
+<li>統計圖形、訊息可視化</li>
+<li>一張好圖，勝過千言萬語</li>
+</ul></div>
+
+<div style="float:left;width:48%;">
+<p><img src='img/w2.png' style='height: 450px'></img></p></div>
+
+</article></slide><slide class=''><hgroup><h2>ggplot2 簡介</h2></hgroup><article  id="ggplot2-">
+
+<div style="float:left;width:50%;">
+<ul>
+<li>套件下載次數第一名(<a href='https://www.rdocumentation.org/trends?page1=1&amp;sort1=direct&amp;page2=1&amp;sort2=total&amp;page3=1&amp;page4=1' title=''>Source</a>)</li>
+<li>R環境下的繪圖套件</li>
+<li>取自 “The Grammar of Graphics” (Leland Wilkinson, 2005)</li>
+<li><a href='https://github.com/cosname/ggplot2-translation/blob/master/preface.md' title=''>設計理念</a>
+
+<ul>
+<li>採用圖層系統</li>
+<li>用抽象的概念來控制圖形，</br> 避免細節繁瑣</li>
+<li>圖形美觀</li>
+</ul></li>
+</ul></div>
+
+<div style="float:right;width:48%;">
+<p><img src='img/most_download_in_R.png' width=420 align='center'></img></p></div>
+
+</article></slide><slide class=''><hgroup><h2>The Anatomy of a Plot</h2></hgroup><article  id="the-anatomy-of-a-plot">
+
+<center>
+
+<img src='img/anatomy.png' width=750 align='center'></img>
+
+</center>
+
+</article></slide><slide class=''><hgroup><h2>ggplot2 基本架構</h2></hgroup><article  id="ggplot2-">
+
+<ul>
+<li>資料 (data) 和映射 (mapping)</li>
+<li>幾何對象 (<code>geom</code>etric)</li>
+<li>座標尺度 (<code>scale</code>)</li>
+<li>統計轉換 (<code>stat</code>istics)</li>
+<li>座標系統 (<code>coord</code>inante)</li>
+<li>圖層 (layer)</li>
+<li>刻面 (<code>facet</code>)</li>
+<li>主題 (<code>theme</code>)</li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>ggplot2 基本架構(2)</h2></hgroup><article  id="ggplot2-2">
+
+<center>
+
+<img src='img/ggplot.jpeg' width=550 align='center'></img> </br> source: <a href='http://goo.gl/Odt2Rs' title=''>http://goo.gl/Odt2Rs</a>
+
+</center>
+
+</article></slide><slide class=''><hgroup><h2>ggplot2 基本語法</h2></hgroup><article  id="ggplot2-">
+
+<pre class = 'prettyprint lang-r'>ggplot(data=..., aes(x=..., y=...)) + 
+  geom_xxx(...) +
+  stat_xxx(...) + 
+  facet_xxx(...) + ...</pre>
+
+<ul>
+<li><code>ggplot</code> 描述 data 從哪來</li>
+<li><code>aes</code> 描述圖上的元素跟 data 之類的對應關係</li>
+<li><code>geom_xxx</code> 描述要畫圖的類型及相關調整的參數</li>
+<li>常用的類型諸如：<code>geom_bar</code>, <code>geom_line</code>, <code>geom_points</code>, &#8230;</li>
+</ul>
+
+</article></slide><slide class='segue dark nobackground level1'><hgroup class = 'auto-fadein'><h2>圖層概念的實作</h2></hgroup><article >
+
+</article></slide><slide class=''><hgroup><h2>Various functions</h2></hgroup><article  id="various-functions">
+
+<pre class = 'prettyprint lang-r'>library(ggplot2)
+# list all geom
+ls(pattern = &#39;^geom_&#39;, env = as.environment(&#39;package:ggplot2&#39;))</pre>
+
+<pre > [1] &quot;geom_abline&quot;     &quot;geom_area&quot;       &quot;geom_bar&quot;       
+ [4] &quot;geom_bin2d&quot;      &quot;geom_blank&quot;      &quot;geom_boxplot&quot;   
+ [7] &quot;geom_col&quot;        &quot;geom_contour&quot;    &quot;geom_count&quot;     
+[10] &quot;geom_crossbar&quot;   &quot;geom_curve&quot;      &quot;geom_density&quot;   
+[13] &quot;geom_density_2d&quot; &quot;geom_density2d&quot;  &quot;geom_dotplot&quot;   
+[16] &quot;geom_errorbar&quot;   &quot;geom_errorbarh&quot;  &quot;geom_freqpoly&quot;  
+[19] &quot;geom_hex&quot;        &quot;geom_histogram&quot;  &quot;geom_hline&quot;     
+[22] &quot;geom_jitter&quot;     &quot;geom_label&quot;      &quot;geom_line&quot;      
+[25] &quot;geom_linerange&quot;  &quot;geom_map&quot;        &quot;geom_path&quot;      
+[28] &quot;geom_point&quot;      &quot;geom_pointrange&quot; &quot;geom_polygon&quot;   
+[31] &quot;geom_qq&quot;         &quot;geom_quantile&quot;   &quot;geom_raster&quot;    
+[34] &quot;geom_rect&quot;       &quot;geom_ribbon&quot;     &quot;geom_rug&quot;       
+[37] &quot;geom_segment&quot;    &quot;geom_sf&quot;         &quot;geom_smooth&quot;    
+[40] &quot;geom_spoke&quot;      &quot;geom_step&quot;       &quot;geom_text&quot;      
+[43] &quot;geom_tile&quot;       &quot;geom_violin&quot;     &quot;geom_vline&quot;     </pre>
+
+</article></slide><slide class=''><hgroup><h2><strong>注意</strong></h2></hgroup><article >
+
+<ul>
+<li>使用 <code>data.frame</code> 儲存資料 (不可以丟 matrix 物件)</li>
+<li>使用 <code>long format</code> (利用reshape2將資料轉換成 1 row = 1 observation)</li>
+</ul>
+
+<p></br></p>
+
+<center>
+
+<img src='img/wide-long.png' title=''/>
+
+</center>
+
+</article></slide><slide class=''><hgroup><h2>馬上來個範例</h2></hgroup><article  data-background="a.jpeg">
+
+<pre class = 'prettyprint lang-r'># 先定義一個資料表
+data &lt;- data.frame(身份 = c(&quot;大學部&quot;,&quot;研究所&quot;,&quot;教授&quot;,&quot;講師&quot;,&quot;助教&quot;), 
+                   人數 = c(20,15,5,2,3))
+# plot
+ggplot(data = data, aes(x = 身份, y = 人數)) + 
+  geom_bar(stat = &quot;identity&quot;) +
+  theme_grey(base_family = &quot;STHeiti&quot;) </pre>
+
+<p><img src="R_EDA_Visualization_files/figure-html/unnamed-chunk-4-1.png" width="576" style="display: block; margin: auto;" /></p>
+
+</article></slide><slide class='segue dark nobackground level1'><hgroup class = 'auto-fadein'><h2>正片開始</h2></hgroup><article >
+
+</article></slide><slide class=''><hgroup><h2>首先請先安裝以下套件</h2></hgroup><article >
+
+<ul>
+<li>安裝套件</li>
+</ul>
+
+<pre class = 'prettyprint lang-r'>install.packages(c(&quot;ggplot2&quot;,&quot;dplyr&quot;,&quot;reshape2&quot;),repos=&quot;http://cran.csie.ntu.edu.tw/&quot;)</pre>
+
+<p></br></p>
+
+<ul>
+<li>載入套件</li>
+</ul>
+
+<pre class = 'prettyprint lang-r'>library(ggplot2)
+library(dplyr)
+library(reshape2)</pre>
+
+<p></br></p>
+
+<p><strong>注意</strong>：下載完套件一定要記得 <code>library</code> 才能使用喲！</p>
+
+</article></slide><slide class=''><hgroup><h2>一切從讀檔開始（CSV）</h2></hgroup><article  id="csv">
+
+<ul>
+<li><a href='https://ling32342.github.io/2017_NCCU_R/data/transaction.csv' title=''>課程資料下載</a></li>
+</ul>
+
+<pre class = 'prettyprint lang-r'>############### 絕對路徑 ###############
+# 請輸入完整的檔案路徑
+data &lt;- read.csv(&quot;/Volumes/SD-Lofu/PIXNET_DS_Workshop_EDA_Alger/data/transaction.csv&quot;) #如果你是mac
+data &lt;- read.csv(&quot;C:\\Users\\transaction.csv&quot;) #如果你是windows
+
+############### 相對路徑 ###############
+# 瞭解現在我們所處在的路徑
+getwd()
+# 設定我們檔案存放的路徑
+setwd() 
+# 讀檔起手式
+data &lt;- read.csv(&quot;transaction.csv&quot;) 
+# 若讀入的是亂碼，試試以下
+data &lt;- read.csv(&quot;transaction.csv&quot;,fileEncoding = &#39;big5&#39;)  #如果你是mac
+data &lt;- read.csv(&quot;transaction.csv&quot;,fileEncoding = &#39;utf-8&#39;) #如果你是windows</pre>
+
+</article></slide><slide class=''><hgroup><h2>資料介紹</h2></hgroup><article >
+
+<table class = 'rmdtable'>
+<tr class="header">
+<th align="right">area_land</th>
+<th align="left">district</th>
+<th align="right">area_park</th>
+<th align="left">city</th>
+<th align="right">price_unit</th>
+<th align="right">area_build</th>
+</tr>
+<tr class="odd">
+<td align="right">35.0</td>
+<td align="left">士林區</td>
+<td align="right">0.0</td>
+<td align="left">臺北市</td>
+<td align="right">105263</td>
+<td align="right">61</td>
+</tr>
+<tr class="even">
+<td align="right">10.7</td>
+<td align="left">中山區</td>
+<td align="right">0.0</td>
+<td align="left">臺北市</td>
+<td align="right">114928</td>
+<td align="right">104</td>
+</tr>
+<tr class="odd">
+<td align="right">8.5</td>
+<td align="left">中山區</td>
+<td align="right">8.6</td>
+<td align="left">臺北市</td>
+<td align="right">194070</td>
+<td align="right">52</td>
+</tr>
+<tr class="even">
+<td align="right">4.7</td>
+<td align="left">北投區</td>
+<td align="right">0.0</td>
+<td align="left">臺北市</td>
+<td align="right">116900</td>
+<td align="right">39</td>
+</tr>
+<tr class="odd">
+<td align="right">31.0</td>
+<td align="left">中山區</td>
+<td align="right">0.0</td>
+<td align="left">臺北市</td>
+<td align="right">128510</td>
+<td align="right">185</td>
+</tr>
+</table>
+
+</article></slide><slide class=''><hgroup><h2>欄位說明</h2></hgroup><article >
+
+<div style="float:left;width:48%;">
+<table class = 'rmdtable'>
+<tr class="header">
+<th align="left">英文欄位名稱</th>
+<th align="left">中文欄位名稱</th>
+</tr>
+<tr class="odd">
+<td align="left">city</td>
+<td align="left">縣市</td>
+</tr>
+<tr class="even">
+<td align="left">district</td>
+<td align="left">鄉鎮市區</td>
+</tr>
+<tr class="odd">
+<td align="left">trac_year</td>
+<td align="left">交易年份</td>
+</tr>
+<tr class="even">
+<td align="left">trac_month</td>
+<td align="left">交易月份</td>
+</tr>
+<tr class="odd">
+<td align="left">trac_type</td>
+<td align="left">交易標的</td>
+</tr>
+<tr class="even">
+<td align="left">trac_content</td>
+<td align="left">交易筆棟數</td>
+</tr>
+<tr class="odd">
+<td align="left">use_type</td>
+<td align="left">使用分區或編定</td>
+</tr>
+</table></div>
+
+<div style="float:right;width:50%;">
+<table class = 'rmdtable'>
+<tr class="header">
+<th align="left">英文欄位名稱</th>
+<th align="left">中文欄位名稱</th>
+</tr>
+<tr class="odd">
+<td align="left">build_type</td>
+<td align="left">建物型態</td>
+</tr>
+<tr class="even">
+<td align="left">build_ymd</td>
+<td align="left">建築完成年月</td>
+</tr>
+<tr class="odd">
+<td align="left">area_land</td>
+<td align="left">土地移轉總面積.平方公尺.</td>
+</tr>
+<tr class="even">
+<td align="left">area_build</td>
+<td align="left">建物移轉總面積.平方公尺.</td>
+</tr>
+<tr class="odd">
+<td align="left">area_park</td>
+<td align="left">車位移轉總面積.平方公尺.</td>
+</tr>
+<tr class="even">
+<td align="left">price_total</td>
+<td align="left">總價.元.</td>
+</tr>
+<tr class="odd">
+<td align="left">price_unit</td>
+<td align="left">單價.元.平方公尺.</td>
+</tr>
+</table></div>
+
+</article></slide><slide class=''><hgroup><h2>以為開始了嗎？</h2></hgroup><article >
+
+<ul>
+<li>進行分析前，先去了解資料的型態與特性</li>
+</ul>
+
+<pre class = 'prettyprint lang-r'>str(data)</pre>
+
+<pre >&#39;data.frame&#39;:   153598 obs. of  15 variables:
+ $ city        : Factor w/ 4 levels &quot;高雄市&quot;,&quot;臺北市&quot;,..: 2 2 2 2 2 2 2 2 2 2 ...
+ $ district    : Factor w/ 99 levels &quot;阿蓮區&quot;,&quot;八里區&quot;,..: 63 96 96 5 96 5 5 38 38 42 ...
+ $ trac_year   : int  102 102 102 102 102 102 102 102 102 102 ...
+ $ trac_month  : Factor w/ 12 levels &quot;1&quot;,&quot;2&quot;,&quot;3&quot;,&quot;4&quot;,..: 1 1 1 1 1 1 1 1 1 1 ...
+ $ trac_type   : Factor w/ 2 levels &quot;房地(土地+建物)&quot;,..: 1 1 2 1 1 2 2 2 2 2 ...
+ $ trac_content: Factor w/ 327 levels &quot;土地0建物0車位0&quot;,..: 57 57 58 57 57 62 62 58 64 167 ...
+ $ use_type    : Factor w/ 5 levels &quot;工&quot;,&quot;農&quot;,&quot;其他&quot;,..: 5 4 4 4 5 5 5 5 1 5 ...
+ $ build_type  : Factor w/ 12 levels &quot;辦公商業大樓&quot;,..: 6 12 10 12 7 7 7 12 1 12 ...
+ $ build_ymd   : int  701109 701228 970114 851218 970624 1010724 1010724 1000414 1010531 870910 ...
+ $ area_land   : num  34.96 10.71 8.51 4.7 30.97 ...
+ $ area_build  : num  60.6 104.5 51.9 39.4 185.2 ...
+ $ area_park   : num  0 0 8.55 0 0 ...
+ $ price_total : num  6380000 12010000 10080000 4600000 23800000 ...
+ $ price_unit  : int  105263 114928 194070 116900 128510 218147 204716 174613 133648 27658 ...
+ $ age         : int  32 32 5 17 5 1 1 2 1 15 ...</pre>
+
+</article></slide><slide class=''><hgroup><h2>身為資料分析師，一定要有的好習慣！</h2></hgroup><article >
+
+<ul>
+<li>暸解基本的各變數統計量值</li>
+</ul>
+
+<pre class = 'prettyprint lang-r'>summary(data) </pre>
+
+<pre >     city          district        trac_year     trac_month   
+ 高雄市:34460   淡水區 :  7172   Min.   :102   12     :15206  
+ 臺北市:24238   西屯區 :  5974   1st Qu.:102   5      :15079  
+ 臺中市:37482   新莊區 :  5955   Median :102   4      :14682  
+ 新北市:57418   北屯區 :  5881   Mean   :102   3      :14523  
+                新店區 :  5873   3rd Qu.:102   7      :13805  
+                中和區 :  5719   Max.   :102   6      :13392  
+                (Other):117024                 (Other):66911  
+                trac_type              trac_content   use_type     
+ 房地(土地+建物)     :91613   土地1建物1車位0:66792   工  :  3233  
+ 房地(土地+建物)+車位:61985   土地1建物1車位1:41031   農  :   577  
+                              土地2建物1車位0:14537   其他:  8206  
+                              土地1建物1車位2: 7195   商  : 26205  
+                              土地2建物1車位1: 4787   住  :115377  
+                              土地3建物1車位0: 4691                
+                              (Other)        :14565                
+                      build_type      build_ymd         area_land     
+ 住宅大樓(11層含以上有電梯):70725   Min.   : 100602   Min.   :     0  
+ 公寓(5樓含以下無電梯)     :23211   1st Qu.: 780326   1st Qu.:    13  
+ 透天厝                    :21954   Median : 870506   Median :    22  
+ 華廈(10層含以下有電梯)    :20365   Mean   : 868754   Mean   :    42  
+ 套房(1房1廳1衛)           : 9709   3rd Qu.: 991201   3rd Qu.:    36  
+ 店面(店鋪)                : 2888   Max.   :1030313   Max.   :127088  
+ (Other)                   : 4746                                     
+   area_build      area_park        price_total           price_unit     
+ Min.   :    0   Min.   :      0   Min.   :         0   Min.   :      0  
+ 1st Qu.:   85   1st Qu.:      0   1st Qu.:   4900000   1st Qu.:  42685  
+ Median :  124   Median :      0   Median :   8400000   Median :  67880  
+ Mean   :  153   Mean   :     25   Mean   :  12879580   Mean   :  86176  
+ 3rd Qu.:  179   3rd Qu.:      9   3rd Qu.:  14580000   3rd Qu.: 111173  
+ Max.   :79669   Max.   :2400000   Max.   :8800000000   Max.   :4284119  
+                                                        NA&#39;s   :461      
+      age    
+ Min.   :-1  
+ 1st Qu.: 3  
+ Median :15  
+ Mean   :15  
+ 3rd Qu.:24  
+ Max.   :92  
+             </pre>
+
+</article></slide><slide class='segue dark nobackground level1'><hgroup class = 'auto-fadein'><h2>質化 v.s. 量化：Bar Chart</h2></hgroup><article  id="-v.s.-bar-chart">
+
+</article></slide><slide class=''><hgroup><h2><code>geom_bar</code></h2></hgroup><article  id="geom_bar">
+
+<ul>
+<li>先來<code>比較</code>看看2013年在各縣市的案件交易量</li>
+</ul>
+
+<pre class = 'prettyprint lang-r'>thm &lt;- function() theme(text=element_text(size = 15, family = &quot;STHeiti&quot;)) # 控制字體與大小
+    # STHeiti是只有Mac才有的字體, 用來解決Mac系統中文顯示錯誤的問題
+    # Windows系統使用者請忽略 `+ thm()` 指令
+data %&gt;% 
+  ggplot(aes(x=city)) + geom_bar(stat = &quot;count&quot;) + thm() # stat = &quot;count&quot; 算個數</pre>
+
+<p><img src="R_EDA_Visualization_files/figure-html/unnamed-chunk-15-1.png" width="720" style="display: block; margin: auto;" /></p>
+
+</article></slide><slide class=''><hgroup><h2>Change labels !</h2></hgroup><article  id="change-labels">
+
+<pre class = 'prettyprint lang-r'>data %&gt;% 
+  ggplot(aes(x=city)) + geom_bar(stat = &quot;count&quot;) + thm() +
+  labs(title=&quot;各縣市交易量&quot;,x=&quot;縣市&quot;,y=&quot;交易量&quot;) # lab用來幫圖形的標題、x軸與y軸做命名</pre>
+
+<p><img src="R_EDA_Visualization_files/figure-html/unnamed-chunk-16-1.png" width="720" style="display: block; margin: auto;" /></p>
+
+</article></slide><slide class=''><hgroup><h2>Change colors !</h2></hgroup><article  id="change-colors">
+
+<ul>
+<li>顏色調整：<code>color</code> vs <code>fill</code>?</li>
+</ul>
+
+<pre class = 'prettyprint lang-r'>data %&gt;% 
+  ggplot(aes(x=city)) + geom_bar(stat = &quot;count&quot;) + thm() +
+  labs(title=&quot;各縣市交易量&quot;,x=&quot;縣市&quot;,y=&quot;交易量&quot;) +
+  geom_bar(fill=&#39;snow&#39;, color=&#39;black&#39;) # see colors() if you&#39;re picky</pre>
+
+<p><img src="R_EDA_Visualization_files/figure-html/unnamed-chunk-17-1.png" width="720" style="display: block; margin: auto;" /></p>
+
+</article></slide><slide class=''><hgroup><h2>Bar chart</h2></hgroup><article  id="bar-chart">
+
+<ul>
+<li><code>比較</code>臺北市各行政區的案件交易量</li>
+</ul>
+
+<pre class = 'prettyprint lang-r'># 資料整理
+table = data %&gt;% 
+  filter(city == &quot;臺北市&quot;) %&gt;% 
+  group_by(district) %&gt;% 
+  summarise(amount=n())  # dplyr::n 用來計數</pre>
+
+</article></slide><slide class=''><hgroup><h2>Bar chart</h2></hgroup><article  id="bar-chart-1">
+
+<pre class = 'prettyprint lang-r'>table %&gt;% 
+  ggplot(aes(x=district,y=amount)) +
+  geom_bar(stat = &quot;identity&quot;) + thm() # stat=&#39;identity&#39;以表格的值做為bar的高度</pre>
+
+<p><img src="R_EDA_Visualization_files/figure-html/unnamed-chunk-19-1.png" width="720" style="display: block; margin: auto;" /></p>
+
+</article></slide><slide class=''><hgroup><h2>Reoder x</h2></hgroup><article  id="reoder-x">
+
+<pre class = 'prettyprint lang-r'>table %&gt;% 
+  ggplot(aes(x=reorder(district,-amount), y=amount)) +
+  geom_bar(stat=&#39;identity&#39;) + thm() +
+  labs(titles = &quot;臺北市各行政區交易量&quot;, x = &quot;行政區&quot;, y = &quot;案件數&quot;)</pre>
+
+<p><img src="R_EDA_Visualization_files/figure-html/unnamed-chunk-20-1.png" width="720" style="display: block; margin: auto;" /></p>
+
+</article></slide><slide class=''><hgroup><h2>小挑戰</h2></hgroup><article >
+
+<ul>
+<li>計算並<code>比較</code>臺北市&amp;高雄市的各使用分區或編定(<code>use_type</code>)所佔比例</li>
+</ul>
+
+<pre >Source: local data frame [10 x 4]
+Groups: city [2]
+
+# A tibble: 10 x 4
+     city use_type amount  rate
+   &lt;fctr&gt;   &lt;fctr&gt;  &lt;int&gt; &lt;dbl&gt;
+ 1 高雄市       工    196  0.01
+ 2 高雄市       農    123  0.00
+ 3 高雄市     其他    532  0.02
+ 4 高雄市       商   7582  0.22
+ 5 高雄市       住  26027  0.76
+ 6 臺北市       工    442  0.02
+ 7 臺北市       農      3  0.00
+ 8 臺北市     其他   1709  0.07
+ 9 臺北市       商   7323  0.30
+10 臺北市       住  14761  0.61</pre>
+
+</article></slide><slide class=''><hgroup><h2>參考解答</h2></hgroup><article >
+
+<pre class = 'prettyprint lang-r'>table = data %&gt;% 
+  filter(city == &quot;臺北市&quot; | city == &quot;高雄市&quot; ) %&gt;% 
+  group_by(city,use_type) %&gt;% 
+  summarise(amount = n()) %&gt;% 
+  mutate(rate = round(amount/sum(amount),2) ) </pre>
+
+<center>
+
+<img src='img/white2.png' width=600 align='center'></img>
+
+</center>
+
+</article></slide><slide class=''><hgroup><h2>Grouping：<code>stack</code></h2></hgroup><article  id="groupingstack">
+
+<pre class = 'prettyprint lang-r'>table %&gt;% 
+  ggplot(aes(x = city, y = rate, fill = use_type)) +
+  geom_bar(stat = &#39;identity&#39;, position = &#39;stack&#39;) + thm() # stack類別堆疊</pre>
+
+<p><img src="R_EDA_Visualization_files/figure-html/unnamed-chunk-23-1.png" width="720" style="display: block; margin: auto;" /></p>
+
+</article></slide><slide class=''><hgroup><h2>Grouping：<code>dodge</code></h2></hgroup><article  id="groupingdodge">
+
+<pre class = 'prettyprint lang-r'>table %&gt;% 
+  ggplot(aes(x = city, y = rate, fill = use_type)) +
+  geom_bar(stat = &#39;identity&#39;, position = &#39;dodge&#39;)  + # dodge類別並排
+  thm() + scale_fill_discrete(name  =&quot;使用分區或編定&quot;)  # 設定圖例的顯示</pre>
+
+<p><img src="R_EDA_Visualization_files/figure-html/unnamed-chunk-24-1.png" width="720" style="display: block; margin: auto;" /></p>
+
+</article></slide><slide class='segue dark nobackground level1'><hgroup class = 'auto-fadein'><h2>量化 v.s. 量化：Line Chart</h2></hgroup><article  id="-v.s.-line-chart">
+
+</article></slide><slide class=''><hgroup><h2><code>geom_line</code></h2></hgroup><article  id="geom_line">
+
+<ul>
+<li>各月份交易量</li>
+</ul>
+
+<pre class = 'prettyprint lang-r'>table = data %&gt;% 
+  group_by(trac_month) %&gt;% 
+  summarise(amount=n()) 
+table</pre>
+
+<pre ># A tibble: 12 x 2
+   trac_month amount
+       &lt;fctr&gt;  &lt;int&gt;
+ 1          1  10367
+ 2          2   7871
+ 3          3  14523
+ 4          4  14682
+ 5          5  15079
+ 6          6  13392
+ 7          7  13805
+ 8          8  11714
+ 9          9  10814
+10         10  13166
+11         11  12979
+12         12  15206</pre>
+
+</article></slide><slide class=''><hgroup><h2>Line chart</h2></hgroup><article  id="line-chart">
+
+<pre class = 'prettyprint lang-r'>table %&gt;% 
+  ggplot(aes(x=trac_month,y=amount,group=1)) +
+  geom_line() + thm() + labs(x = &quot;交易月份&quot; , y = &quot;交易數量&quot;)</pre>
+
+<p><img src="R_EDA_Visualization_files/figure-html/unnamed-chunk-26-1.png" width="720" style="display: block; margin: auto;" /></p>
+
+</article></slide><slide class=''><hgroup><h2><code>Multiple</code> Line</h2></hgroup><article  id="multiple-line">
+
+<ul>
+<li>各縣市各月份交易量比較</li>
+</ul>
+
+<pre class = 'prettyprint lang-r'>table = data %&gt;% 
+  group_by(city,trac_month) %&gt;% 
+  summarise(amount=n()) 
+table</pre>
+
+<pre >Source: local data frame [48 x 3]
+Groups: city [?]
+
+# A tibble: 48 x 3
+     city trac_month amount
+   &lt;fctr&gt;     &lt;fctr&gt;  &lt;int&gt;
+ 1 高雄市          1   2511
+ 2 高雄市          2   1897
+ 3 高雄市          3   3355
+ 4 高雄市          4   3524
+ 5 高雄市          5   3378
+ 6 高雄市          6   3097
+ 7 高雄市          7   3063
+ 8 高雄市          8   2573
+ 9 高雄市          9   2354
+10 高雄市         10   2590
+# ... with 38 more rows</pre>
+
+</article></slide><slide class=''><hgroup><h2><code>Multiple</code> Line</h2></hgroup><article  id="multiple-line-1">
+
+<pre class = 'prettyprint lang-r'>table %&gt;% 
+  ggplot(aes(x=trac_month,y=amount,group=city,color=city)) +
+  geom_line() + geom_point() + thm() + 
+  labs(x = &quot;交易月份&quot; , y = &quot;交易數量&quot;)</pre>
+
+<p><img src="R_EDA_Visualization_files/figure-html/unnamed-chunk-28-1.png" width="720" style="display: block; margin: auto;" /></p>
+
+</article></slide><slide class=''><hgroup><h2>小挑戰</h2></hgroup><article  id="-1">
+
+<ul>
+<li>計算臺北市&amp;高雄市不同屋齡的交易量，並畫出 <code>Multiple</code> Line plot</li>
+<li>如下圖：</li>
+</ul>
+
+<p><img src="R_EDA_Visualization_files/figure-html/unnamed-chunk-29-1.png" width="720" style="display: block; margin: auto;" /></p>
+
+</article></slide><slide class=''><hgroup><h2>參考答案 (有發現什麼問題嗎？！)</h2></hgroup><article  id="-">
+
+<pre class = 'prettyprint lang-r'>data %&gt;% 
+  filter(city == &quot;臺北市&quot; | city == &quot;高雄市&quot; ) %&gt;% 
+  group_by(city,age) %&gt;% 
+  summarise(amount = n()) %&gt;% 
+  ggplot(aes(x=age,y=amount,group=city,color=city)) +
+  geom_line() + geom_point() + thm()</pre>
+
+<p><img src="R_EDA_Visualization_files/figure-html/unnamed-chunk-30-1.png" width="720" style="display: block; margin: auto;" /></p>
+
+</article></slide><slide class=''><hgroup><h2>調整 x 軸的 scale 再看一次</h2></hgroup><article  id="-x--scale-">
+
+<ul>
+<li>EDA的的價值之一就是找出資料中的不合理</li>
+</ul>
+
+<pre class = 'prettyprint lang-r'>data %&gt;% 
+  filter(city == &quot;臺北市&quot; | city == &quot;高雄市&quot; ) %&gt;% 
+  group_by(city,age) %&gt;% 
+  summarise(amount = n()) %&gt;% 
+  ggplot(aes(x=age,y=amount,group=city,color=city)) +
+  geom_line() + geom_point() + thm() + coord_cartesian(xlim = c(-3, 10))</pre>
+
+<p><img src="R_EDA_Visualization_files/figure-html/unnamed-chunk-31-1.png" width="720" style="display: block; margin: auto;" /></p>
+
+</article></slide><slide class='segue dark nobackground level1'><hgroup class = 'auto-fadein'><h2>單一數值：Histogram</h2></hgroup><article  id="histogram">
+
+</article></slide><slide class=''><hgroup><h2><code>geom_histogram</code></h2></hgroup><article  id="geom_histogram">
+
+<pre class = 'prettyprint lang-r'>data %&gt;% 
+  ggplot(aes(x=age, y =..count..)) + 
+  geom_histogram()</pre>
+
+<p><img src="R_EDA_Visualization_files/figure-html/unnamed-chunk-32-1.png" width="720" style="display: block; margin: auto;" /></p>
+
+</article></slide><slide class=''><hgroup><h2>Histogram</h2></hgroup><article  id="histogram-1">
+
+<ul>
+<li><code>aes(y=..count..)</code> vs. <code>aes(y=..density..)</code></li>
+</ul>
+
+<pre class = 'prettyprint lang-r'>data %&gt;% 
+  ggplot(aes(x=age, y =..density..)) + 
+  geom_histogram()</pre>
+
+<p><img src="R_EDA_Visualization_files/figure-html/unnamed-chunk-33-1.png" width="720" style="display: block; margin: auto;" /></p>
+
+</article></slide><slide class=''><hgroup><h2>Histogram</h2></hgroup><article  id="histogram-2">
+
+<pre class = 'prettyprint lang-r'>data %&gt;% 
+  ggplot(aes(x=age, y =..density.., fill =..count..)) + # fill 依指定欄位填色
+  geom_histogram(binwidth=.5) </pre>
+
+<p><img src="R_EDA_Visualization_files/figure-html/unnamed-chunk-34-1.png" width="720" style="display: block; margin: auto;" /></p>
+
+</article></slide><slide class=''><hgroup><h2>Histogram + density</h2></hgroup><article  id="histogram-density">
+
+<ul>
+<li><code>geom_histogram()</code> + <code>geom_density()</code></li>
+</ul>
+
+<pre class = 'prettyprint lang-r'>data %&gt;% 
+  ggplot(aes(x=age,y=..density..)) + 
+  geom_histogram(color=&quot;black&quot;, fill=&quot;white&quot;) +
+  geom_density(alpha=.2, fill=&quot;#FF6666&quot;) # alpha設定透明度</pre>
+
+<p><img src="R_EDA_Visualization_files/figure-html/unnamed-chunk-35-1.png" width="720" style="display: block; margin: auto;" /></p>
+
+</article></slide><slide class='segue dark nobackground level1'><hgroup class = 'auto-fadein'><h2>Boxplot</h2></hgroup><article  id="boxplot">
+
+</article></slide><slide class=''><hgroup><h2>Boxplot</h2></hgroup><article  id="boxplot-1">
+
+<ul>
+<li><code>geom_boxplot</code></li>
+</ul>
+
+<pre class = 'prettyprint lang-r'>data %&gt;% 
+  ggplot(aes(x=city,y=price_unit)) + 
+  geom_boxplot() + thm() + 
+  labs(x = &quot;縣市&quot; , y = &quot;每平方公尺價格(元)&quot;)</pre>
+
+<p><img src="R_EDA_Visualization_files/figure-html/unnamed-chunk-36-1.png" width="720" style="display: block; margin: auto;" /></p>
+
+</article></slide><slide class=''><hgroup><h2>Change <code>limits</code> of axes !</h2></hgroup><article  id="change-limits-of-axes">
+
+<pre class = 'prettyprint lang-r'>data %&gt;% 
+  ggplot(aes(x=city,y=price_unit)) + 
+  geom_boxplot() + thm() + 
+  labs(x = &quot;縣市&quot; , y = &quot;每平方公尺價格(元)&quot;) + 
+  coord_cartesian(ylim = c(0, 400000)) # 設定y軸上下界線</pre>
+
+<p><img src="R_EDA_Visualization_files/figure-html/unnamed-chunk-37-1.png" width="720" style="display: block; margin: auto;" /></p>
+
+</article></slide><slide class=''><hgroup><h2>Boxplot</h2></hgroup><article  id="boxplot-2">
+
+<ul>
+<li>不用新增欄位，也可以直接在畫圖的同時計算！</li>
+</ul>
+
+<pre class = 'prettyprint lang-r'>data %&gt;% 
+  ggplot(aes(x=city,y=log(price_unit))) + 
+  geom_boxplot() + thm() + # geom_boxplot(outlier.shape = NA) outlier不顯示
+  labs(x = &quot;縣市&quot; , y = &quot;log(每平方公尺價格(元))&quot;)</pre>
+
+<p><img src="R_EDA_Visualization_files/figure-html/unnamed-chunk-38-1.png" width="720" style="display: block; margin: auto;" /></p>
+
+</article></slide><slide class=''><hgroup><h2>小挑戰</h2></hgroup><article  id="-2">
+
+<ul>
+<li>試著畫出高雄市在各種<strong>不同使用分區或編定</strong>下的屋齡分佈</li>
+<li>如下圖：</li>
+</ul>
+
+<p><img src="R_EDA_Visualization_files/figure-html/unnamed-chunk-39-1.png" width="720" style="display: block; margin: auto;" /></p>
+
+</article></slide><slide class=''><hgroup><h2>參考答案</h2></hgroup><article >
+
+<pre class = 'prettyprint lang-r'>data %&gt;% 
+  filter(city == &quot;高雄市&quot;) %&gt;% 
+  ggplot(aes(x=use_type,y=age)) + 
+  geom_boxplot() + thm() + # geom_boxplot(outlier.shape = NA) outlier不顯示
+  labs(x = &quot;use_type&quot; , y = &quot;age&quot;)</pre>
+
+<p><img src="R_EDA_Visualization_files/figure-html/unnamed-chunk-40-1.png" width="720" style="display: block; margin: auto;" /></p>
+
+</article></slide><slide class='segue dark nobackground level1'><hgroup class = 'auto-fadein'><h2>量化 v.s. 量化：Scatter Plot</h2></hgroup><article  id="-v.s.-scatter-plot">
+
+</article></slide><slide class=''><hgroup><h2>Scatter plot</h2></hgroup><article  id="scatter-plot">
+
+<ul>
+<li><code>geom_point</code></li>
+</ul>
+
+<pre class = 'prettyprint lang-r'>iris %&gt;% 
+  ggplot(aes(x=Sepal.Length, y=Petal.Length, color=Species)) + 
+  geom_point(shape=1, size=2) # shape控制圖示；size控制點的大小</pre>
+
+<p><img src="R_EDA_Visualization_files/figure-html/unnamed-chunk-41-1.png" width="720" style="display: block; margin: auto;" /></p>
+
+</article></slide><slide class=''><hgroup><h2>point shape types in <code>ggplot2</code></h2></hgroup><article  id="point-shape-types-in-ggplot2">
+
+<center>
+
+<img src='img/point_shape_types.png' style='height: 500px' align="middle"></img>
+
+</center>
+
+</article></slide><slide class=''><hgroup><h2>Scatter plot</h2></hgroup><article  id="scatter-plot-1">
+
+<ul>
+<li>參數放在 aes() 函數裡面，表示資料依據指定欄位內容做不同的shape/size變化</li>
+</ul>
+
+<pre class = 'prettyprint lang-r'>iris %&gt;% 
+  ggplot(aes(x=Sepal.Length, y=Petal.Length, color=Species, shape = Species, size = Species)) + 
+  geom_point() + scale_shape_manual(values=c(1,5,7)) +  # 控制 shape 顯示圖示
+  scale_size_manual(values=c(1,2,3))   # 控制圖示 size 顯示大小</pre>
+
+<p><img src="R_EDA_Visualization_files/figure-html/unnamed-chunk-42-1.png" width="720" style="display: block; margin: auto;" /></p>
+
+</article></slide><slide class=''><hgroup><h2>插播</h2></hgroup><article >
+
+<pre class = 'prettyprint lang-r'>install.packages(&quot;devtools&quot;)</pre>
+
+<center>
+
+<img src='img/devtools.png' width=750 align='center'></img>
+
+</center>
+
+<ul>
+<li><a href='https://github.com/cttobin/ggthemr' title=''>插播ggthemr</a></li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>小挑戰</h2></hgroup><article  id="-3">
+
+<ul>
+<li>士林區,文山區,信義區三個區域的<strong>套房(1房1廳1衛)</strong>在屋齡與單位尺價存在著怎樣的特性？</li>
+</ul>
+
+<p><img src="R_EDA_Visualization_files/figure-html/unnamed-chunk-44-1.png" width="720" style="display: block; margin: auto;" /></p>
+
+</article></slide><slide class=''><hgroup><h2>參考答案</h2></hgroup><article  id="-1">
+
+<pre class = 'prettyprint lang-r'>library(ggthemr)
+ggthemr(&#39;flat&#39;)
+ans = data %&gt;% 
+  filter(district == &quot;文山區&quot; | district == &quot;士林區&quot; |district == &quot;信義區&quot;) %&gt;% 
+  filter(build_type == &quot;套房(1房1廳1衛)&quot;) %&gt;% 
+  ggplot(aes(x=age, y=price_unit,color = district)) + geom_point(position = &quot;jitter&quot;) +
+  thm() 
+ans</pre>
+
+<p><img src="R_EDA_Visualization_files/figure-html/unnamed-chunk-45-1.png" width="720" style="display: block; margin: auto;" /></p>
+
+</article></slide><slide class='segue dark nobackground level1'><hgroup class = 'auto-fadein'><h2>HeatMap</h2></hgroup><article  id="heatmap">
+
+</article></slide><slide class=''><hgroup><h2>相關性熱圖</h2></hgroup><article >
+
+<ul>
+<li>通常我們會好奇變數與變數之間是不是存在著相關性</li>
+<li>在統計學上有一種簡單的方式去計算變數間的關係指標，我們稱之為相關係數係數！</li>
+<li>以下將以 iris 資料做為示範，用熱圖來呈現</li>
+</ul>
+
+<pre class = 'prettyprint lang-r'># 挑出前四欄位
+dat &lt;- iris[,1:4]
+dat %&gt;% 
+  head()</pre>
+
+<pre >  Sepal.Length Sepal.Width Petal.Length Petal.Width
+1          5.1         3.5          1.4         0.2
+2          4.9         3.0          1.4         0.2
+3          4.7         3.2          1.3         0.2
+4          4.6         3.1          1.5         0.2
+5          5.0         3.6          1.4         0.2
+6          5.4         3.9          1.7         0.4</pre>
+
+</article></slide><slide class=''><hgroup><h2><code>寬轉長</code> 計算相關性</h2></hgroup><article  id="-">
+
+<pre class = 'prettyprint lang-r'>cor &lt;- melt(cor(dat, use=&quot;p&quot;))
+cor %&gt;% 
+  head(10)</pre>
+
+<pre >           Var1         Var2 value
+1  Sepal.Length Sepal.Length  1.00
+2   Sepal.Width Sepal.Length -0.12
+3  Petal.Length Sepal.Length  0.87
+4   Petal.Width Sepal.Length  0.82
+5  Sepal.Length  Sepal.Width -0.12
+6   Sepal.Width  Sepal.Width  1.00
+7  Petal.Length  Sepal.Width -0.43
+8   Petal.Width  Sepal.Width -0.37
+9  Sepal.Length Petal.Length  0.87
+10  Sepal.Width Petal.Length -0.43</pre>
+
+</article></slide><slide class=''><hgroup><h2>Heatmap的好處</h2></hgroup><article  id="heatmap">
+
+<ul>
+<li>藉由 Heatmap ，快速地看出變數之間的關聯程度</li>
+</ul>
+
+<pre class = 'prettyprint lang-r'>cor %&gt;% 
+  ggplot(aes(x=Var1, y=Var2, fill=value)) +
+  geom_tile() + labs(x = &quot;&quot;, y = &quot;&quot;) + scale_fill_gradient2(limits=c(-1, 1))</pre>
+
+<p><img src="R_EDA_Visualization_files/figure-html/unnamed-chunk-48-1.png" width="720" style="display: block; margin: auto;" /></p>
+
+</article></slide><slide class='segue dark nobackground level1'><hgroup class = 'auto-fadein'><h2>進階技巧</h2></hgroup><article >
+
+</article></slide><slide class=''><hgroup><h2><code>stat</code>istics</h2></hgroup><article  id="statistics">
+
+<ul>
+<li>Fit regression line</li>
+</ul>
+
+<pre class = 'prettyprint lang-r'>library(ggthemr)
+ggthemr(&#39;flat&#39;)
+iris %&gt;% 
+  ggplot(aes(x = Sepal.Length, y = Petal.Length)) + 
+  geom_point() +
+  stat_smooth(method=lm, level=.95) # add se=FALSE to disable CI</pre>
+
+<p><img src="R_EDA_Visualization_files/figure-html/unnamed-chunk-49-1.png" width="720" style="display: block; margin: auto;" /></p>
+
+</article></slide><slide class=''><hgroup><h2><code>facet</code></h2></hgroup><article  id="facet">
+
+<ul>
+<li>比較各縣市在各月份下的交易量</li>
+</ul>
+
+<pre class = 'prettyprint lang-r'>data %&gt;% 
+  group_by(city,trac_month) %&gt;% # 選擇縣市、交易月份作為分群
+  summarise(total = n()) -&gt; table # 計算分群下的總數
+table %&gt;% 
+  ggplot(aes(x = trac_month, y = total ,fill = city))+
+    geom_bar(stat=&#39;identity&#39;) + thm()</pre>
+
+<p><img src="R_EDA_Visualization_files/figure-html/unnamed-chunk-50-1.png" width="720" style="display: block; margin: auto;" /></p>
+
+</article></slide><slide class=''><hgroup><h2><code>facet</code></h2></hgroup><article  id="facet-1">
+
+<pre class = 'prettyprint lang-r'>table %&gt;% 
+  ggplot(aes(x = trac_month, y = total ,fill = city))+
+    geom_bar(stat=&#39;identity&#39;) + thm() +
+    facet_wrap( ~city , nrow = 2) +
+    labs(x = &quot;交易月份&quot; ,y=&quot;交易量&quot;)</pre>
+
+<p><img src="R_EDA_Visualization_files/figure-html/unnamed-chunk-51-1.png" width="720" style="display: block; margin: auto;" /></p>
+
+</article></slide><slide class=''><hgroup><h2><code>coord</code>_flip()</h2></hgroup><article  id="coord_flip">
+
+<pre class = 'prettyprint lang-r'>table %&gt;% 
+  ggplot(aes(x = trac_month, y = total ,fill = city)) + 
+  geom_bar(stat=&#39;identity&#39;) + thm() +facet_wrap( ~ city , nrow = 2)+
+  labs(x = &quot;交易月份&quot; ,y=&quot;交易量&quot;) + coord_flip() </pre>
+
+<p><img src="R_EDA_Visualization_files/figure-html/unnamed-chunk-52-1.png" width="720" style="display: block; margin: auto;" /></p>
+
+</article></slide><slide class=''><hgroup><h2>圖形輸出</h2></hgroup><article >
+
+<ul>
+<li>利用 RStudio UI 介面存擋</li>
+<li>畫完圖之後，再存檔~~</li>
+</ul>
+
+<pre class = 'prettyprint lang-r'>ggsave(&#39;檔案名稱&#39;)
+ggsave(&quot;plot.pdf&quot;, width = 4, height = 4)
+ggsave(&quot;plot.png&quot;, width = 4, height = 4, dpi = 300)</pre>
+
+</article></slide><slide class='segue dark nobackground level1'><hgroup class = 'auto-fadein'><h2>互動式視覺化呈現</h2></hgroup><article >
+
+</article></slide><slide class=''><hgroup><h2>package：<code>Plotly</code></h2></hgroup><article  id="packageplotly">
+
+<ul>
+<li>Plotly是一個資料視覺化的R套件，以簡單的方式，讓資料能夠產生互動的效果。</li>
+<li>提供一個合作平台，使用者能夠將自己在R中繪製的圖存上屬於自己的Plotly平台上。</li>
+<li><a href='https://plot.ly/' title=''>Plotly官方網站</a></li>
+<li>結合了各式各樣的API，包裝<code>Python</code>、<code>R</code>、<code>Malab</code>、&#8230;等等</li>
+</ul>
+
+<ul class = 'build'>
+<li>當然～ggplot2也能夠輕易地使用plotly轉換成互動式的圖表！！</li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>套件安裝</h2></hgroup><article >
+
+<ul>
+<li>直接從<code>CRAN</code>內下載</li>
+</ul>
+
+<pre class = 'prettyprint lang-r'># Plotly is now on CRAN!
+install.packages(&quot;plotly&quot;)
+# install the latest development version (on GitHub) via devtools</pre>
+
+<ul>
+<li><code>或是</code>從<code>github</code>上下載，但前提是<code>先</code>安裝<code>devtools</code></li>
+</ul>
+
+<pre class = 'prettyprint lang-r'># install.packages(&quot;devtools&quot;)
+devtools::install_github(&quot;ropensci/plotly&quot;)</pre>
+
+<p></br></p>
+
+<ul>
+<li>安裝完，一樣別忘了要<code>library</code>！</li>
+</ul>
+
+<pre class = 'prettyprint lang-r'>library(plotly)</pre>
+
+</article></slide><slide class=''><hgroup><h2>plot with <code>ggplot2</code></h2></hgroup><article  id="plot-with-ggplot2">
+
+<ul>
+<li>剛剛的小挑戰！？</li>
+</ul>
+
+<pre class = 'prettyprint lang-r'>ans = data %&gt;% 
+  filter(district == &quot;文山區&quot; | district == &quot;士林區&quot; |district == &quot;信義區&quot;) %&gt;% 
+  filter(build_type == &quot;套房(1房1廳1衛)&quot;) %&gt;% 
+  ggplot(aes(x=age, y=price_unit,color = district)) + geom_point(position = &quot;jitter&quot;) +
+  thm() 
+ans</pre>
+
+<p><img src="R_EDA_Visualization_files/figure-html/unnamed-chunk-57-1.png" width="720" style="display: block; margin: auto;" /></p>
+
+</article></slide><slide class=''><hgroup><h2>plot with <code>ggplotly</code> &amp; <code>Resize</code></h2></hgroup><article  id="plot-with-ggplotly-resize">
+
+<ul>
+<li>是不是非常簡單？！</li>
+</ul>
+
+<pre class = 'prettyprint lang-r'>ggplotly(ans,height = 400,width = 1000)</pre>
+
+<div id="9c692bf3ab9b" style="width:1000px;height:400px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="9c692bf3ab9b">{"x":{"data":[{"x":[17.0397507507354,1.12370235063136,4.86787007246167,0.616913808323443,18.0737133769318,14.7686852768064,36.7066930999979,2.92976204492152,0.866467545367777,18.9775235258043,19.1670523017645,2.96985053159297,5.24161649663001,18.083739290759,36.3144052503631,14.8894113954157,14.6520910505205,35.9585888424888,4.89371781479567,12.1040665388107,42.9813253210857,8.74294535014778,5.35833343397826,3.17964419517666,4.86442347839475,4.85296864267439,16.1290831601247,9.33667719755322,18.2619367456064,15.3201291278005,15.6987279744819,21.1702001290396,42.9298334883526,19.0970200251788,19.1226925706491,4.68935598246753,5.15975142698735,4.96813010629266,4.14603021480143,4.76758904494345,4.74577830340713,5.09722220171243,33.7609009766951,5.0660830128938,32.7686137616634,6.20995222777128,4.80004486199468,16.8232943626121,5.33470676746219,18.8243881408125,24.1166550936177,23.6452236091718,17.2243315506727,4.90765056721866,0.99052174128592,19.1249201791361,18.7343756863847,5.05139161907136,5.24038576260209,12.2453028466552,4.99074932783842,1.31691945362836,42.8686530668288,19.1441027779132,5.09257290419191,5.20647829156369,12.0129808468744,5.95709725972265,5.14944831114262,4.7937539819628,5.38229085449129,19.3438425280154,11.8219346690923,4.71932275798172,5.05657349061221,17.0414324387908,18.0101388556883,6.12411298081279,4.96285437084734,16.0290179634467,37.3624581201002,36.759840898402,4.6619112463668,17.1796863922849,20.735157154873,5.2864563619718,19.1596778545529,33.1609478672966,6.36173862684518,1.16187706273049,19.2455041833222,0.695623306930065,16.0711152341217,5.20607425440103,5.34344395976514,11.6847382767126,9.06767035555094,4.63382955323905,17.1532375331968,6.3585995785892,4.72831734828651,16.6875846499577,4.79083975013345,3.8868279421702,17.1427524134517,34.6275154843926,34.05562846791,5.06478099506348,35.320255347155,19.0789634736255,21.3332707105204,4.78274775110185,4.8210844559595,5.28003352023661,19.3805187243968,32.8491155281663,19.3416064007208,20.6839348500595,18.3519216971472,4.98355819880962,4.95511223580688,4.93276737760752,3.11072331573814,4.9489393312484,40.0582100261003],"y":[183079.052964693,249094.636869016,212971.542391525,252438.020998168,147450.101416262,205691.037704369,185642.95569881,135226.468646948,246692.918978574,136974.942716733,188826.881123501,156665.903656256,238944.906962596,164345.613020873,171849.261279938,205101.413930857,217122.549917239,186852.860605332,250121.347925947,133931.302335557,83403.1334145416,195525.739593353,253858.190020487,155981.160493357,279329.605085741,263902.579525935,193454.283273145,232607.740346799,111110.176327671,208463.852465713,195738.831448315,179982.035779865,124830.004979374,152253.926698562,167190.184689283,242631.09731203,231164.382730517,272188.22576977,236929.909623866,253871.206250661,255730.181971161,253869.988423904,160588.523351362,191548.448057885,117565.399642763,145632.755544549,254752.999516752,186395.170013667,247194.685156715,178390.776029592,181897.151694273,180853.323261117,188778.51440252,244919.428131054,263914.478397121,124778.927962395,147581.988759438,226428.103077867,200151.49640449,130102.487849489,258338.489084902,236811.888392908,115331.391597753,174614.516085956,273478.851641315,288298.509484364,150711.212182819,169584.638447684,256705.3913538,246421.082510363,276365.365879888,199760.86384514,149217.20221082,222653.59562725,195659.386228272,159671.32757061,226406.604389534,157468.802937166,273718.962607904,200086.88105446,187184.702868266,186690.097041532,240239.424150084,153157.059569582,210233.85386076,288168.245867785,208170.995642171,118418.044220656,173183.443435597,154319.029528126,204546.342530894,261045.881457647,164122.310194664,281484.50785469,272444.928659236,121380.52812959,362853.592800608,192643.243623087,123755.410181578,137481.71373859,173776.409132137,194804.036044328,271443.825840183,244928.223853381,187699.176161343,158577.569787673,175492.261783842,275483.000074755,182817.463299743,134149.653239677,147439.812061827,285971.416645828,244145.077231653,287878.475487158,204546.254960089,25998.2830453709,160447.319144916,185447.196666142,215561.017353733,296464.401347171,189490.468903707,305471.124057115,177667.511520633,280135.953350261,725577.562175972],"text":["age: 17<br />price_unit: 183079<br />district: 士林區","age:  1<br />price_unit: 249097<br />district: 士林區","age:  5<br />price_unit: 212972<br />district: 士林區","age:  1<br />price_unit: 252438<br />district: 士林區","age: 18<br />price_unit: 147450<br />district: 士林區","age: 15<br />price_unit: 205689<br />district: 士林區","age: 37<br />price_unit: 185641<br />district: 士林區","age:  3<br />price_unit: 135228<br />district: 士林區","age:  1<br />price_unit: 246691<br />district: 士林區","age: 19<br />price_unit: 136976<br />district: 士林區","age: 19<br />price_unit: 188828<br />district: 士林區","age:  3<br />price_unit: 156664<br />district: 士林區","age:  5<br />price_unit: 238947<br />district: 士林區","age: 18<br />price_unit: 164346<br />district: 士林區","age: 36<br />price_unit: 171849<br />district: 士林區","age: 15<br />price_unit: 205101<br />district: 士林區","age: 15<br />price_unit: 217122<br />district: 士林區","age: 36<br />price_unit: 186852<br />district: 士林區","age:  5<br />price_unit: 250119<br />district: 士林區","age: 12<br />price_unit: 133929<br />district: 士林區","age: 43<br />price_unit:  83403<br />district: 士林區","age:  9<br />price_unit: 195527<br />district: 士林區","age:  5<br />price_unit: 253856<br />district: 士林區","age:  3<br />price_unit: 155979<br />district: 士林區","age:  5<br />price_unit: 279330<br />district: 士林區","age:  5<br />price_unit: 263904<br />district: 士林區","age: 16<br />price_unit: 193452<br />district: 士林區","age:  9<br />price_unit: 232609<br />district: 士林區","age: 18<br />price_unit: 111111<br />district: 士林區","age: 15<br />price_unit: 208462<br />district: 士林區","age: 16<br />price_unit: 195737<br />district: 士林區","age: 21<br />price_unit: 179984<br />district: 士林區","age: 43<br />price_unit: 124830<br />district: 士林區","age: 19<br />price_unit: 152252<br />district: 士林區","age: 19<br />price_unit: 167191<br />district: 士林區","age:  5<br />price_unit: 242632<br />district: 士林區","age:  5<br />price_unit: 231166<br />district: 士林區","age:  5<br />price_unit: 272186<br />district: 士林區","age:  4<br />price_unit: 236930<br />district: 士林區","age:  5<br />price_unit: 253870<br />district: 士林區","age:  5<br />price_unit: 255728<br />district: 士林區","age:  5<br />price_unit: 253870<br />district: 士林區","age: 34<br />price_unit: 160587<br />district: 士林區","age:  5<br />price_unit: 191548<br />district: 士林區","age: 33<br />price_unit: 117567<br />district: 士林區","age:  6<br />price_unit: 145631<br />district: 士林區","age:  5<br />price_unit: 254754<br />district: 士林區","age: 17<br />price_unit: 186397<br />district: 士林區","age:  5<br />price_unit: 247195<br />district: 士林區","age: 19<br />price_unit: 178389<br />district: 士林區","age: 24<br />price_unit: 181897<br />district: 士林區","age: 24<br />price_unit: 180851<br />district: 士林區","age: 17<br />price_unit: 188777<br />district: 士林區","age:  5<br />price_unit: 244918<br />district: 士林區","age:  1<br />price_unit: 263913<br />district: 士林區","age: 19<br />price_unit: 124780<br />district: 士林區","age: 19<br />price_unit: 147580<br />district: 士林區","age:  5<br />price_unit: 226428<br />district: 士林區","age:  5<br />price_unit: 200150<br />district: 士林區","age: 12<br />price_unit: 130103<br />district: 士林區","age:  5<br />price_unit: 258340<br />district: 士林區","age:  1<br />price_unit: 236810<br />district: 士林區","age: 43<br />price_unit: 115332<br />district: 士林區","age: 19<br />price_unit: 174613<br />district: 士林區","age:  5<br />price_unit: 273478<br />district: 士林區","age:  5<br />price_unit: 288299<br />district: 士林區","age: 12<br />price_unit: 150713<br />district: 士林區","age:  6<br />price_unit: 169585<br />district: 士林區","age:  5<br />price_unit: 256703<br />district: 士林區","age:  5<br />price_unit: 246423<br />district: 士林區","age:  5<br />price_unit: 276365<br />district: 士林區","age: 19<br />price_unit: 199760<br />district: 士林區","age: 12<br />price_unit: 149219<br />district: 士林區","age:  5<br />price_unit: 222652<br />district: 士林區","age:  5<br />price_unit: 195660<br />district: 士林區","age: 17<br />price_unit: 159672<br />district: 士林區","age: 18<br />price_unit: 226405<br />district: 士林區","age:  6<br />price_unit: 157471<br />district: 士林區","age:  5<br />price_unit: 273719<br />district: 士林區","age: 16<br />price_unit: 200087<br />district: 士林區","age: 37<br />price_unit: 187183<br />district: 士林區","age: 37<br />price_unit: 186690<br />district: 士林區","age:  5<br />price_unit: 240240<br />district: 士林區","age: 17<br />price_unit: 153157<br />district: 士林區","age: 21<br />price_unit: 210234<br />district: 士林區","age:  5<br />price_unit: 288167<br />district: 士林區","age: 19<br />price_unit: 208171<br />district: 士林區","age: 33<br />price_unit: 118418<br />district: 士林區","age:  6<br />price_unit: 173183<br />district: 士林區","age:  1<br />price_unit: 154321<br />district: 士林區","age: 19<br />price_unit: 204545<br />district: 士林區","age:  1<br />price_unit: 261044<br />district: 士林區","age: 16<br />price_unit: 164123<br />district: 士林區","age:  5<br />price_unit: 281485<br />district: 士林區","age:  5<br />price_unit: 272446<br />district: 士林區","age: 12<br />price_unit: 121381<br />district: 士林區","age:  9<br />price_unit: 362853<br />district: 士林區","age:  5<br />price_unit: 192641<br />district: 士林區","age: 17<br />price_unit: 123756<br />district: 士林區","age:  6<br />price_unit: 137480<br />district: 士林區","age:  5<br />price_unit: 173776<br />district: 士林區","age: 17<br />price_unit: 194805<br />district: 士林區","age:  5<br />price_unit: 271443<br />district: 士林區","age:  4<br />price_unit: 244930<br />district: 士林區","age: 17<br />price_unit: 187700<br />district: 士林區","age: 35<br />price_unit: 158576<br />district: 士林區","age: 34<br />price_unit: 175492<br />district: 士林區","age:  5<br />price_unit: 275482<br />district: 士林區","age: 35<br />price_unit: 182818<br />district: 士林區","age: 19<br />price_unit: 134151<br />district: 士林區","age: 21<br />price_unit: 147438<br />district: 士林區","age:  5<br />price_unit: 285970<br />district: 士林區","age:  5<br />price_unit: 244143<br />district: 士林區","age:  5<br />price_unit: 287879<br />district: 士林區","age: 19<br />price_unit: 204545<br />district: 士林區","age: 33<br />price_unit:  26000<br />district: 士林區","age: 19<br />price_unit: 160446<br />district: 士林區","age: 21<br />price_unit: 185449<br />district: 士林區","age: 18<br />price_unit: 215560<br />district: 士林區","age:  5<br />price_unit: 296465<br />district: 士林區","age:  5<br />price_unit: 189490<br />district: 士林區","age:  5<br />price_unit: 305470<br />district: 士林區","age:  3<br />price_unit: 177666<br />district: 士林區","age:  5<br />price_unit: 280137<br />district: 士林區","age: 40<br />price_unit: 725577<br />district: 士林區"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(52,152,219,1)","opacity":1,"size":5.66929133858268,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(52,152,219,1)"}},"hoveron":"points","name":"士林區","legendgroup":"士林區","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[2.97162342965603,2.77292631603777,4.36539033148438,16.9017368081957,3.64517374709249,4.08802224528044,12.8785204496235,18.7800880655646,5.19022022169083,4.85307808276266,9.67409068197012,19.7369194971398,17.397275926359,12.61934153568,16.8338641779497,18.1481585910544,20.180343799293,5.16426231060177,17.1762442791834,29.7167955193669,21.2323519833386,3.11116439290345,0.607667059265077,18.8330990090966,17.6142428871244,18.6864259419963,17.0381356857717,20.2355662336573,16.6139895049855,19.8659607116133,16.8378381730989,5.03254545386881,3.72791885267943,10.0315460043028,19.2968295756727,3.0815619584173,3.75505740921944,3.71722782440484,30.0636762216687,9.76715108714998,10.1036497214809,17.3699958981946,18.699185054563,18.1422396529466,4.86565177552402,17.7514649264514,4.12289642300457,3.93929032627493,7.28184465896338,9.96843113806099,6.29973687715828,17.3188741805032,19.0989782493562,29.878579782322,17.6461382716894,17.8971564650536,2.679595060274,18.7040735071525,4.67508643064648,17.7284881526604,4.03005405589938,12.9745759246871,3.99573807064444,4.64500510878861,16.6533058639616,18.3814120313153,2.95699511002749,3.02405631560832,5.37639233265072,16.9609905403107,4.06220239326358,3.03927398696542,10.8361306762323,30.232039626129,16.8783315243199,18.0826858125627,4.99439109712839,7.94208128117025,9.93954684138298,16.9348041813821,7.05954421740025,4.97931234575808,5.17242168094963,7.60939942318946,21.2392277546227,18.8229900442064,6.36582863107324,5.11428927816451,4.60834600776434,16.898307159543,17.9155274203047,16.7603974092752,6.09052946381271,6.30401063524187,16.1764301320538,9.02851636148989,4.93972121477127,4.63446087092161,17.9695811765268,16.6053979672492,16.9081675140187,4.08053125329316,8.12279522642493,3.8943753765896,30.2755251569673,16.1222207197919,19.7056000875309,18.7107104506344,16.0579531969503,16.0979292761534,2.62499457187951,3.81635833401233,16.7786119872704,9.16606809217483,18.1152339277789,3.95411407016218,19.3433797026053,2.90454337019473,3.33403294887394,17.2257006656379,17.1187021872029,5.9417640818283,18.292085705325,5.0372431088239,2.10059514269233,3.33689182344824,3.87076535150409,17.3053040698171,4.89744536392391,17.0977648178115,5.8216383786872,5.06043739188462,18.0816133666784,19.0514367027208,6.3430410400033,17.3119651185349,4.76561378799379,20.2354917740449,17.6904976192862,5.14676671177149,5.23128448482603,19.0507592514157,16.700298091583,2.88502884488553,18.8555204221979,18.6671953238547,3.3939919423312,2.75881512183696,4.83117236401886,18.2076622223482,3.25013655759394,4.92520151864737,10.7833488758653,17.2747710397467,10.34274153281,18.1215371338651,12.902559841983,16.6933283822611,4.37877165507525,30.0694528061897,10.2435869798064,2.6330814152956,20.1745323145762,16.6480613820255,17.6364058310166,11.2398832483217,20.6738982392475,16.6674317656085,3.02270897049457,17.2170782068744,10.0078806787729,17.8073885288089,5.13987485393882,18.3757614787668,4.37558037918061,9.8983186557889,17.6213247781619,17.3892129989341,9.29324180372059,5.16365567874163,6.99917873572558,17.9576781185344,6.6738099899143,17.6399929556996,16.7780997700989,5.00297737065703,4.89766979943961,3.91092275753617,11.2427347587422,4.1820337433368,10.3270229047164,19.7874248333275,18.3490987231955,18.8020772920921],"y":[211630.827050052,214935.409071007,184053.764521306,97084.2178851645,124699.271399263,150736.503996844,126985.54139046,107498.475364108,123224.635146306,97335.0713583257,116675.815630353,100702.074345204,121785.68376736,121590.865387792,109716.632439874,92869.4635540355,124041.187204928,153487.323782504,116590.338367023,111204.322026431,142600.953849861,103478.48037979,174806.091364592,155091.177301434,118054.295886094,95523.414631173,108891.400130867,99717.2850996621,114129.13212168,110962.636913518,181619.036005469,180381.681953953,157613.830998867,128903.282893499,99163.0807275895,100772.380856855,153961.360315561,156406.836824878,126031.596579366,129388.847877713,133134.79071669,153055.108279057,134111.864907486,86060.4807648208,182756.523609938,113531.259334446,130486.384728208,144032.143713468,152421.072977272,136012.856841417,202714.182314079,165789.370289659,157543.346952497,107563.458270575,121203.263988912,107221.201055773,161322.462611994,152099.332516348,142413.769787244,113597.719872488,197468.301163569,126984.036282869,192722.791138035,142909.043047433,110155.29270638,36638.4466443788,151156.970058837,86958.8020072132,160034.654219738,141314.580201857,127255.167434803,165016.906470751,171235.934083261,30137.8808530338,103399.368857633,145887.319061578,126664.035357368,112803.986999345,138811.460996932,118970.519856513,135807.27116313,163383.722525437,194547.380288127,199535.875951284,145476.810033122,193548.647183813,218750.987801882,155434.886729579,185674.090733848,106686.51068281,133264.033227748,110325.464524058,91694.0174020667,211210.935812517,124248.710316445,195929.632907623,193638.27178978,197499.776390646,118204.937722846,136736.809795229,126273.049990927,181457.117528194,239256.909974588,137820.085478411,114731.121415902,142668.105934569,126622.252052875,127495.315863201,219886.59093128,114230.051828552,123893.148193669,197393.674941816,117927.170340781,208940.594153916,197221.05245608,139858.368023007,167574.026030836,227557.957399666,134772.83820282,110894.709066888,177357.813183507,79985.7876958236,99274.7440433722,203231.965233819,195153.672422228,169964.640596281,163700.968613488,109775.260694057,161532.106731539,119821.23436534,90896.6081710737,190445.082386244,139203.617147906,70056.2306267165,94695.4101129577,140323.283683348,206084.009852912,131524.898736393,103411.383607798,161612.581214116,239301.66490719,170099.932131003,120069.60706422,112123.213063752,157818.470360645,160475.624211663,163611.528665561,156257.224265685,152261.033274367,116276.734900812,131691.416825508,154975.788325276,171487.247041336,115951.625908899,103619.471605128,96844.7756946638,141092.964065269,123052.294309969,196713.659026324,106930.981561812,107006.926966052,124976.625050163,127875.742869458,132390.35758318,121623.330255948,164729.801020814,187520.88317883,120071.991427451,180371.816651592,129324.909551885,162490.453577293,165561.736021922,144318.477710352,108220.16136297,164075.050663518,139587.55037625,105344.068391888,107514.923478578,123357.884637137,192843.458537107,168310.070582002,156904.152645089,188558.34970905,72739.7349016711,168525.670038538,124532.09925697,201223.905550959,183108.361165031,177909.170033646,159809.842273588,148984.248861127,122665.797213977,154325.811797132,172001.293925185],"text":["age:  3<br />price_unit: 211631<br />district: 文山區","age:  3<br />price_unit: 214935<br />district: 文山區","age:  4<br />price_unit: 184056<br />district: 文山區","age: 17<br />price_unit:  97084<br />district: 文山區","age:  4<br />price_unit: 124697<br />district: 文山區","age:  4<br />price_unit: 150737<br />district: 文山區","age: 13<br />price_unit: 126984<br />district: 文山區","age: 19<br />price_unit: 107499<br />district: 文山區","age:  5<br />price_unit: 123227<br />district: 文山區","age:  5<br />price_unit:  97335<br />district: 文山區","age: 10<br />price_unit: 116676<br />district: 文山區","age: 20<br />price_unit: 100703<br />district: 文山區","age: 17<br />price_unit: 121784<br />district: 文山區","age: 13<br />price_unit: 121589<br />district: 文山區","age: 17<br />price_unit: 109716<br />district: 文山區","age: 18<br />price_unit:  92871<br />district: 文山區","age: 20<br />price_unit: 124041<br />district: 文山區","age:  5<br />price_unit: 153488<br />district: 文山區","age: 17<br />price_unit: 116591<br />district: 文山區","age: 30<br />price_unit: 111206<br />district: 文山區","age: 21<br />price_unit: 142602<br />district: 文山區","age:  3<br />price_unit: 103477<br />district: 文山區","age:  1<br />price_unit: 174807<br />district: 文山區","age: 19<br />price_unit: 155089<br />district: 文山區","age: 18<br />price_unit: 118056<br />district: 文山區","age: 19<br />price_unit:  95524<br />district: 文山區","age: 17<br />price_unit: 108891<br />district: 文山區","age: 20<br />price_unit:  99715<br />district: 文山區","age: 17<br />price_unit: 114128<br />district: 文山區","age: 20<br />price_unit: 110961<br />district: 文山區","age: 17<br />price_unit: 181619<br />district: 文山區","age:  5<br />price_unit: 180384<br />district: 文山區","age:  4<br />price_unit: 157616<br />district: 文山區","age: 10<br />price_unit: 128904<br />district: 文山區","age: 19<br />price_unit:  99161<br />district: 文山區","age:  3<br />price_unit: 100773<br />district: 文山區","age:  4<br />price_unit: 153959<br />district: 文山區","age:  4<br />price_unit: 156409<br />district: 文山區","age: 30<br />price_unit: 126032<br />district: 文山區","age: 10<br />price_unit: 129390<br />district: 文山區","age: 10<br />price_unit: 133133<br />district: 文山區","age: 17<br />price_unit: 153055<br />district: 文山區","age: 19<br />price_unit: 134110<br />district: 文山區","age: 18<br />price_unit:  86059<br />district: 文山區","age:  5<br />price_unit: 182757<br />district: 文山區","age: 18<br />price_unit: 113529<br />district: 文山區","age:  4<br />price_unit: 130486<br />district: 文山區","age:  4<br />price_unit: 144032<br />district: 文山區","age:  7<br />price_unit: 152421<br />district: 文山區","age: 10<br />price_unit: 136011<br />district: 文山區","age:  6<br />price_unit: 202715<br />district: 文山區","age: 17<br />price_unit: 165789<br />district: 文山區","age: 19<br />price_unit: 157543<br />district: 文山區","age: 30<br />price_unit: 107562<br />district: 文山區","age: 18<br />price_unit: 121204<br />district: 文山區","age: 18<br />price_unit: 107223<br />district: 文山區","age:  3<br />price_unit: 161322<br />district: 文山區","age: 19<br />price_unit: 152099<br />district: 文山區","age:  5<br />price_unit: 142416<br />district: 文山區","age: 18<br />price_unit: 113596<br />district: 文山區","age:  4<br />price_unit: 197467<br />district: 文山區","age: 13<br />price_unit: 126984<br />district: 文山區","age:  4<br />price_unit: 192723<br />district: 文山區","age:  5<br />price_unit: 142909<br />district: 文山區","age: 17<br />price_unit: 110156<br />district: 文山區","age: 18<br />price_unit:  36638<br />district: 文山區","age:  3<br />price_unit: 151159<br />district: 文山區","age:  3<br />price_unit:  86957<br />district: 文山區","age:  5<br />price_unit: 160037<br />district: 文山區","age: 17<br />price_unit: 141313<br />district: 文山區","age:  4<br />price_unit: 127253<br />district: 文山區","age:  3<br />price_unit: 165017<br />district: 文山區","age: 11<br />price_unit: 171238<br />district: 文山區","age: 30<br />price_unit:  30136<br />district: 文山區","age: 17<br />price_unit: 103397<br />district: 文山區","age: 18<br />price_unit: 145888<br />district: 文山區","age:  5<br />price_unit: 126665<br />district: 文山區","age:  8<br />price_unit: 112804<br />district: 文山區","age: 10<br />price_unit: 138812<br />district: 文山區","age: 17<br />price_unit: 118969<br />district: 文山區","age:  7<br />price_unit: 135808<br />district: 文山區","age:  5<br />price_unit: 163384<br />district: 文山區","age:  5<br />price_unit: 194545<br />district: 文山區","age:  8<br />price_unit: 199536<br />district: 文山區","age: 21<br />price_unit: 145479<br />district: 文山區","age: 19<br />price_unit: 193548<br />district: 文山區","age:  6<br />price_unit: 218750<br />district: 文山區","age:  5<br />price_unit: 155434<br />district: 文山區","age:  5<br />price_unit: 185674<br />district: 文山區","age: 17<br />price_unit: 106686<br />district: 文山區","age: 18<br />price_unit: 133265<br />district: 文山區","age: 17<br />price_unit: 110327<br />district: 文山區","age:  6<br />price_unit:  91693<br />district: 文山區","age:  6<br />price_unit: 211213<br />district: 文山區","age: 16<br />price_unit: 124250<br />district: 文山區","age:  9<br />price_unit: 195931<br />district: 文山區","age:  5<br />price_unit: 193638<br />district: 文山區","age:  5<br />price_unit: 197499<br />district: 文山區","age: 18<br />price_unit: 118203<br />district: 文山區","age: 17<br />price_unit: 136737<br />district: 文山區","age: 17<br />price_unit: 126274<br />district: 文山區","age:  4<br />price_unit: 181457<br />district: 文山區","age:  8<br />price_unit: 239257<br />district: 文山區","age:  4<br />price_unit: 137821<br />district: 文山區","age: 30<br />price_unit: 114733<br />district: 文山區","age: 16<br />price_unit: 142666<br />district: 文山區","age: 20<br />price_unit: 126622<br />district: 文山區","age: 19<br />price_unit: 127494<br />district: 文山區","age: 16<br />price_unit: 219888<br />district: 文山區","age: 16<br />price_unit: 114232<br />district: 文山區","age:  3<br />price_unit: 123894<br />district: 文山區","age:  4<br />price_unit: 197396<br />district: 文山區","age: 17<br />price_unit: 117929<br />district: 文山區","age:  9<br />price_unit: 208939<br />district: 文山區","age: 18<br />price_unit: 197220<br />district: 文山區","age:  4<br />price_unit: 139858<br />district: 文山區","age: 19<br />price_unit: 167576<br />district: 文山區","age:  3<br />price_unit: 227560<br />district: 文山區","age:  3<br />price_unit: 134773<br />district: 文山區","age: 17<br />price_unit: 110894<br />district: 文山區","age: 17<br />price_unit: 177360<br />district: 文山區","age:  6<br />price_unit:  79988<br />district: 文山區","age: 18<br />price_unit:  99276<br />district: 文山區","age:  5<br />price_unit: 203232<br />district: 文山區","age:  2<br />price_unit: 195155<br />district: 文山區","age:  3<br />price_unit: 169967<br />district: 文山區","age:  4<br />price_unit: 163703<br />district: 文山區","age: 17<br />price_unit: 109777<br />district: 文山區","age:  5<br />price_unit: 161531<br />district: 文山區","age: 17<br />price_unit: 119823<br />district: 文山區","age:  6<br />price_unit:  90896<br />district: 文山區","age:  5<br />price_unit: 190447<br />district: 文山區","age: 18<br />price_unit: 139202<br />district: 文山區","age: 19<br />price_unit:  70058<br />district: 文山區","age:  6<br />price_unit:  94694<br />district: 文山區","age: 17<br />price_unit: 140323<br />district: 文山區","age:  5<br />price_unit: 206086<br />district: 文山區","age: 20<br />price_unit: 131523<br />district: 文山區","age: 18<br />price_unit: 103413<br />district: 文山區","age:  5<br />price_unit: 161611<br />district: 文山區","age:  5<br />price_unit: 239302<br />district: 文山區","age: 19<br />price_unit: 170101<br />district: 文山區","age: 17<br />price_unit: 120071<br />district: 文山區","age:  3<br />price_unit: 112121<br />district: 文山區","age: 19<br />price_unit: 157818<br />district: 文山區","age: 19<br />price_unit: 160478<br />district: 文山區","age:  3<br />price_unit: 163613<br />district: 文山區","age:  3<br />price_unit: 156258<br />district: 文山區","age:  5<br />price_unit: 152260<br />district: 文山區","age: 18<br />price_unit: 116279<br />district: 文山區","age:  3<br />price_unit: 131691<br />district: 文山區","age:  5<br />price_unit: 154977<br />district: 文山區","age: 11<br />price_unit: 171485<br />district: 文山區","age: 17<br />price_unit: 115952<br />district: 文山區","age: 10<br />price_unit: 103621<br />district: 文山區","age: 18<br />price_unit:  96847<br />district: 文山區","age: 13<br />price_unit: 141093<br />district: 文山區","age: 17<br />price_unit: 123050<br />district: 文山區","age:  4<br />price_unit: 196712<br />district: 文山區","age: 30<br />price_unit: 106929<br />district: 文山區","age: 10<br />price_unit: 107005<br />district: 文山區","age:  3<br />price_unit: 124976<br />district: 文山區","age: 20<br />price_unit: 127877<br />district: 文山區","age: 17<br />price_unit: 132392<br />district: 文山區","age: 18<br />price_unit: 121624<br />district: 文山區","age: 11<br />price_unit: 164730<br />district: 文山區","age: 21<br />price_unit: 187523<br />district: 文山區","age: 17<br />price_unit: 120071<br />district: 文山區","age:  3<br />price_unit: 180371<br />district: 文山區","age: 17<br />price_unit: 129325<br />district: 文山區","age: 10<br />price_unit: 162492<br />district: 文山區","age: 18<br />price_unit: 165563<br />district: 文山區","age:  5<br />price_unit: 144317<br />district: 文山區","age: 18<br />price_unit: 108220<br />district: 文山區","age:  4<br />price_unit: 164074<br />district: 文山區","age: 10<br />price_unit: 139588<br />district: 文山區","age: 18<br />price_unit: 105342<br />district: 文山區","age: 17<br />price_unit: 107514<br />district: 文山區","age:  9<br />price_unit: 123358<br />district: 文山區","age:  5<br />price_unit: 192842<br />district: 文山區","age:  7<br />price_unit: 168309<br />district: 文山區","age: 18<br />price_unit: 156904<br />district: 文山區","age:  7<br />price_unit: 188560<br />district: 文山區","age: 18<br />price_unit:  72742<br />district: 文山區","age: 17<br />price_unit: 168524<br />district: 文山區","age:  5<br />price_unit: 124531<br />district: 文山區","age:  5<br />price_unit: 201224<br />district: 文山區","age:  4<br />price_unit: 183110<br />district: 文山區","age: 11<br />price_unit: 177910<br />district: 文山區","age:  4<br />price_unit: 159812<br />district: 文山區","age: 10<br />price_unit: 148986<br />district: 文山區","age: 20<br />price_unit: 122664<br />district: 文山區","age: 18<br />price_unit: 154327<br />district: 文山區","age: 19<br />price_unit: 172000<br />district: 文山區"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(46,204,113,1)","opacity":1,"size":5.66929133858268,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(46,204,113,1)"}},"hoveron":"points","name":"文山區","legendgroup":"文山區","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[3.801913703233,7.0812268724665,9.08657675292343,3.87237979006022,3.62567494492978,21.1178611630574,22.3576857551932,15.8904078286141,8.3507508167997,14.688317194581,8.1310275092721,6.6242613568902,5.2320835981518,7.22644021175802,5.82081090528518,3.6003183465451,7.07984882295132,4.10457296241075,5.17925158757716,19.608318589814,8.60031853634864,17.2021623987705,16.6969054851681,8.83798777107149,4.36775382366031,4.3355867177248,8.87390585895628,6.66242253836244,8.91979384217411,4.70518281087279,18.6072106644511,19.8414603969082,17.7695911740884,4.96111993305385,5.6563488420099,31.8294641813263,6.62529049310833,5.0985091811046,3.79136270862073,9.21708093099296,16.7038633994758,4.04047718942165,10.6924499982968,5.12566396202892,3.92498466428369,3.71590935308486,22.9936769340187,3.63350238148123,7.10624754726887,13.0646982476115,20.002476891689,22.343769685179,5.90547345131636,7.32813884243369,3.28241944964975,23.8059003930539,3.96075331885368,4.89056199789047,6.77404380701482,4.82040254957974,3.7764132913202,22.1660323884338,6.11060000099242,8.23513359967619,23.8832356672734,32.3956802411005,4.04782712720335,5.38804633300751,21.8475515479222,9.39040265195072,20.0845748757944,4.60781578607857,7.67261645309627,24.1031516533345,4.84252703879029,36.7111686212942,16.761526921019,16.2914456471801,15.9390652712435,5.188515949063,10.258645946905,23.2625209420919,3.84431983344257,16.9430404704064,13.1073403999209,6.69017912037671,6.81739886347204,5.37967456802726,4.94638552013785,7.16165894512087,15.2810862066224,7.9605717048049,23.073396207951,3.98086985722184,4.63343970868736,5.33374989386648,5.05967763196677,21.7475520797074,5.75314361024648,17.7913449818268,3.86672526206821,7.20393149144948,17.240657446906,16.0968274099752,4.1531477689743,15.2220115298405,6.70099395792931,22.9593807436526,19.257570323348,8.27466630730778,15.6994490385056,15.9078600134701,7.07112315241247,15.9344923317432,4.06318454947323,12.607182953693,7.62269400171936,15.1070520101115,5.85930368192494,20.8736907910556,14.6539082791656,6.67376324925572,6.89417038634419,4.19412473365665,6.26338668186218,4.3188190376386,22.7937896396965,6.09689722601324,12.7024907624349,22.2314070865512,5.3813999466598,7.64093112740666,4.69620365407318,4.39385194126517,6.76903524827212,21.2544056167826,14.7275987576693,8.15392298083752,4.16052846908569,7.80310569852591,4.99328368511051,15.1039721312001,8.88474386818707,21.9356129443273,20.3132385082543,7.15057178735733,7.39582457393408,6.8285466928035,6.67085443250835,11.2943689411506,3.86935717519373,4.78504568226635,17.0571211874485,7.35936465058476,3.930880288966,3.64312911704183,13.9664550276473,3.83070699386299,7.13761911727488,6.86003693994135,7.11292158141732,7.14776831939816,4.36160285584629,15.8947911566123,4.1503827681765,4.04209922570735,20.1584305133671,6.08374385591596,3.64482479114085,16.2544633833691,4.86909100599587,6.11224407479167,7.21729607954621,7.24248804189265,3.61834798417985,6.67418056707829,19.2716415707022,4.01401738841087,5.10602585710585,7.99352835528552,19.3672532174736,6.91332312971354,7.1358374029398,3.71821644883603,4.22240812033415,23.7482821948826,6.94549916926771,9.10163078475744,15.7474859878421,7.24685584530234,7.10782983656973,3.75578821860254,18.7839539209381,23.029502536729,20.6539831476286,6.23119084946811,7.15483162477612,7.6620428154245,17.2971759615466,23.9747040893883,5.18170169666409,5.61548855230212,6.24898856226355,24.1810618720949,14.0545547794551,13.3606821978465,4.38365429136902,7.29762351736426,17.0027636410668,7.7613223284483,8.17986829522997,6.33686412405223,25.139452698268,4.28546353727579,6.23616897407919,22.7722315518185,8.19567884076387],"y":[199613.483254837,282864.992007334,334217.915809165,363212.031824396,335498.297582298,159077.37856684,163300.797764131,129295.875293292,386829.887287218,257518.1210617,360515.525976468,270941.378918153,204526.107958506,315729.139613534,410733.848673721,264462.173686877,332841.965515942,211650.59086247,226214.391860994,250000.980778985,423860.828980156,236230.863392527,207088.220812458,413160.691641891,299012.613237179,220148.87603684,294074.217749896,253526.398420329,392462.621677293,250549.267500035,220675.546094434,228556.182230074,66204.4276583072,278861.505768357,318277.617883772,231647.145122252,332474.121816558,239520.099745686,206433.786002604,393552.971879654,186087.805520024,361952.61286415,250474.950163226,233940.432991153,220050.913684785,318721.957747348,204813.672072453,228967.052582897,354086.463196337,183501.438406071,222661.938423815,153661.438401974,252637.813955584,280537.074569364,188068.614265867,239486.72597054,239460.622860689,188711.537737753,321496.209361788,279132.957272111,313011.077042086,236422.271245713,273857.333541901,364528.757831817,278495.70030633,272657.226083047,242732.832663402,249864.204541933,220656.020281078,256941.90072392,212540.161355641,276344.281985932,362971.258198086,251846.119522431,303557.638182736,248590.33608929,171006.351445348,249427.677303566,217825.667639536,297744.597004217,220646.061974104,184867.741003255,226543.396953467,224892.009449875,290193.724528399,211941.315435914,286239.675817019,184177.982760228,191046.288871339,380691.556384659,289890.975874176,396132.106791259,173766.648667707,255155.634102936,322866.870861486,297741.821778047,258867.299466066,276441.541990406,379284.39521267,204032.007856334,279939.949201808,372294.081013506,202246.803377368,216209.60442527,397309.073316808,240220.821168851,302113.939513735,163246.876491211,184643.777196149,256343.379564333,211861.025764474,214903.148612106,294711.539205655,211856.959649899,226540.21550995,287788.341556274,231185.315540235,275875.420435702,100962.359284794,190012.621177968,254320.933548936,262409.250112865,275422.247669286,324243.387750327,426069.002783422,421472.794774336,211522.71628932,489721.265153559,320760.020131667,72147.653480722,284952.023187431,401763.964411637,333713.900311038,342108.703743609,402808.945280582,182154.118647927,306758.427650646,377514.764951609,252242.314228643,69406.1444779199,330309.566598296,326126.868054813,381213.137336394,191065.585894228,249944.817103484,381914.587122089,335312.872273324,332427.77034835,198402.003998762,273293.281211698,341320.823258248,337286.391104504,146047.409775995,347349.766053655,236254.533292405,256197.090726409,392388.309321097,269890.527369553,263341.592801869,321072.150357461,305363.079915287,356585.783169749,292709.862730062,251297.983945337,257675.962757849,289565.608142539,174935.971488149,304165.99337007,222244.733061975,257393.389034609,413376.313374444,431558.470198172,407607.794504948,236657.961813317,178428.117953372,226818.819837139,206837.309097288,250922.525119711,252564.470482797,408452.965873853,250210.913460448,300775.884154232,239059.27665484,361194.064209479,236026.567488557,244660.109949676,233420.136825346,272210.132419769,285487.337059765,373046.599620654,307751.217595035,294637.998387791,210487.253438014,227451.118751435,236473.109249681,377523.905099887,325680.493448685,395629.337294088,211803.64153578,248486.723616442,326531.831613937,453776.509384507,213699.072457734,220379.794853891,139255.429104643,303053.733250783,248356.158558022,249761.529631462,253820.570951169,373778.280213585,396345.616736835,280089.124392821,283151.912798587,320253.084394763,324069.905281499,194876.285592581,202778.103281574],"text":["age:  4<br />price_unit: 199612<br />district: 信義區","age:  7<br />price_unit: 282864<br />district: 信義區","age:  9<br />price_unit: 334218<br />district: 信義區","age:  4<br />price_unit: 363210<br />district: 信義區","age:  4<br />price_unit: 335500<br />district: 信義區","age: 21<br />price_unit: 159076<br />district: 信義區","age: 22<br />price_unit: 163300<br />district: 信義區","age: 16<br />price_unit: 129298<br />district: 信義區","age:  8<br />price_unit: 386831<br />district: 信義區","age: 15<br />price_unit: 257519<br />district: 信義區","age:  8<br />price_unit: 360517<br />district: 信義區","age:  7<br />price_unit: 270939<br />district: 信義區","age:  5<br />price_unit: 204527<br />district: 信義區","age:  7<br />price_unit: 315727<br />district: 信義區","age:  6<br />price_unit: 410733<br />district: 信義區","age:  4<br />price_unit: 264463<br />district: 信義區","age:  7<br />price_unit: 332842<br />district: 信義區","age:  4<br />price_unit: 211651<br />district: 信義區","age:  5<br />price_unit: 226214<br />district: 信義區","age: 20<br />price_unit: 250000<br />district: 信義區","age:  9<br />price_unit: 423862<br />district: 信義區","age: 17<br />price_unit: 236229<br />district: 信義區","age: 17<br />price_unit: 207087<br />district: 信義區","age:  9<br />price_unit: 413160<br />district: 信義區","age:  4<br />price_unit: 299014<br />district: 信義區","age:  4<br />price_unit: 220151<br />district: 信義區","age:  9<br />price_unit: 294076<br />district: 信義區","age:  7<br />price_unit: 253527<br />district: 信義區","age:  9<br />price_unit: 392465<br />district: 信義區","age:  5<br />price_unit: 250549<br />district: 信義區","age: 19<br />price_unit: 220677<br />district: 信義區","age: 20<br />price_unit: 228556<br />district: 信義區","age: 18<br />price_unit:  66203<br />district: 信義區","age:  5<br />price_unit: 278861<br />district: 信義區","age:  6<br />price_unit: 318277<br />district: 信義區","age: 32<br />price_unit: 231648<br />district: 信義區","age:  7<br />price_unit: 332474<br />district: 信義區","age:  5<br />price_unit: 239521<br />district: 信義區","age:  4<br />price_unit: 206436<br />district: 信義區","age:  9<br />price_unit: 393553<br />district: 信義區","age: 17<br />price_unit: 186086<br />district: 信義區","age:  4<br />price_unit: 361955<br />district: 信義區","age: 11<br />price_unit: 250477<br />district: 信義區","age:  5<br />price_unit: 233939<br />district: 信義區","age:  4<br />price_unit: 220049<br />district: 信義區","age:  4<br />price_unit: 318721<br />district: 信義區","age: 23<br />price_unit: 204813<br />district: 信義區","age:  4<br />price_unit: 228967<br />district: 信義區","age:  7<br />price_unit: 354087<br />district: 信義區","age: 13<br />price_unit: 183503<br />district: 信義區","age: 20<br />price_unit: 222664<br />district: 信義區","age: 22<br />price_unit: 153661<br />district: 信義區","age:  6<br />price_unit: 252637<br />district: 信義區","age:  7<br />price_unit: 280536<br />district: 信義區","age:  3<br />price_unit: 188069<br />district: 信義區","age: 24<br />price_unit: 239489<br />district: 信義區","age:  4<br />price_unit: 239459<br />district: 信義區","age:  5<br />price_unit: 188710<br />district: 信義區","age:  7<br />price_unit: 321494<br />district: 信義區","age:  5<br />price_unit: 279135<br />district: 信義區","age:  4<br />price_unit: 313010<br />district: 信義區","age: 22<br />price_unit: 236423<br />district: 信義區","age:  6<br />price_unit: 273858<br />district: 信義區","age:  8<br />price_unit: 364529<br />district: 信義區","age: 24<br />price_unit: 278497<br />district: 信義區","age: 32<br />price_unit: 272657<br />district: 信義區","age:  4<br />price_unit: 242733<br />district: 信義區","age:  5<br />price_unit: 249865<br />district: 信義區","age: 22<br />price_unit: 220654<br />district: 信義區","age:  9<br />price_unit: 256942<br />district: 信義區","age: 20<br />price_unit: 212540<br />district: 信義區","age:  5<br />price_unit: 276343<br />district: 信義區","age:  8<br />price_unit: 362970<br />district: 信義區","age: 24<br />price_unit: 251847<br />district: 信義區","age:  5<br />price_unit: 303559<br />district: 信義區","age: 37<br />price_unit: 248590<br />district: 信義區","age: 17<br />price_unit: 171004<br />district: 信義區","age: 16<br />price_unit: 249428<br />district: 信義區","age: 16<br />price_unit: 217826<br />district: 信義區","age:  5<br />price_unit: 297744<br />district: 信義區","age: 10<br />price_unit: 220648<br />district: 信義區","age: 23<br />price_unit: 184867<br />district: 信義區","age:  4<br />price_unit: 226541<br />district: 信義區","age: 17<br />price_unit: 224892<br />district: 信義區","age: 13<br />price_unit: 290194<br />district: 信義區","age:  7<br />price_unit: 211941<br />district: 信義區","age:  7<br />price_unit: 286240<br />district: 信義區","age:  5<br />price_unit: 184176<br />district: 信義區","age:  5<br />price_unit: 191048<br />district: 信義區","age:  7<br />price_unit: 380690<br />district: 信義區","age: 15<br />price_unit: 289889<br />district: 信義區","age:  8<br />price_unit: 396131<br />district: 信義區","age: 23<br />price_unit: 173766<br />district: 信義區","age:  4<br />price_unit: 255156<br />district: 信義區","age:  5<br />price_unit: 322866<br />district: 信義區","age:  5<br />price_unit: 297744<br />district: 信義區","age:  5<br />price_unit: 258866<br />district: 信義區","age: 22<br />price_unit: 276442<br />district: 信義區","age:  6<br />price_unit: 379282<br />district: 信義區","age: 18<br />price_unit: 204031<br />district: 信義區","age:  4<br />price_unit: 279942<br />district: 信義區","age:  7<br />price_unit: 372292<br />district: 信義區","age: 17<br />price_unit: 202247<br />district: 信義區","age: 16<br />price_unit: 216208<br />district: 信義區","age:  4<br />price_unit: 397309<br />district: 信義區","age: 15<br />price_unit: 240221<br />district: 信義區","age:  7<br />price_unit: 302115<br />district: 信義區","age: 23<br />price_unit: 163247<br />district: 信義區","age: 19<br />price_unit: 184643<br />district: 信義區","age:  8<br />price_unit: 256341<br />district: 信義區","age: 16<br />price_unit: 211859<br />district: 信義區","age: 16<br />price_unit: 214905<br />district: 信義區","age:  7<br />price_unit: 294712<br />district: 信義區","age: 16<br />price_unit: 211859<br />district: 信義區","age:  4<br />price_unit: 226541<br />district: 信義區","age: 13<br />price_unit: 287790<br />district: 信義區","age:  8<br />price_unit: 231184<br />district: 信義區","age: 15<br />price_unit: 275875<br />district: 信義區","age:  6<br />price_unit: 100962<br />district: 信義區","age: 21<br />price_unit: 190012<br />district: 信義區","age: 15<br />price_unit: 254320<br />district: 信義區","age:  7<br />price_unit: 262410<br />district: 信義區","age:  7<br />price_unit: 275421<br />district: 信義區","age:  4<br />price_unit: 324244<br />district: 信義區","age:  6<br />price_unit: 426068<br />district: 信義區","age:  4<br />price_unit: 421472<br />district: 信義區","age: 23<br />price_unit: 211523<br />district: 信義區","age:  6<br />price_unit: 489722<br />district: 信義區","age: 13<br />price_unit: 320762<br />district: 信義區","age: 22<br />price_unit:  72150<br />district: 信義區","age:  5<br />price_unit: 284950<br />district: 信義區","age:  8<br />price_unit: 401764<br />district: 信義區","age:  5<br />price_unit: 333712<br />district: 信義區","age:  4<br />price_unit: 342111<br />district: 信義區","age:  7<br />price_unit: 402807<br />district: 信義區","age: 21<br />price_unit: 182155<br />district: 信義區","age: 15<br />price_unit: 306760<br />district: 信義區","age:  8<br />price_unit: 377514<br />district: 信義區","age:  4<br />price_unit: 252241<br />district: 信義區","age:  8<br />price_unit:  69407<br />district: 信義區","age:  5<br />price_unit: 330309<br />district: 信義區","age: 15<br />price_unit: 326127<br />district: 信義區","age:  9<br />price_unit: 381214<br />district: 信義區","age: 22<br />price_unit: 191064<br />district: 信義區","age: 20<br />price_unit: 249946<br />district: 信義區","age:  7<br />price_unit: 381913<br />district: 信義區","age:  7<br />price_unit: 335312<br />district: 信義區","age:  7<br />price_unit: 332427<br />district: 信義區","age:  7<br />price_unit: 198402<br />district: 信義區","age: 11<br />price_unit: 273292<br />district: 信義區","age:  4<br />price_unit: 341323<br />district: 信義區","age:  5<br />price_unit: 337288<br />district: 信義區","age: 17<br />price_unit: 146046<br />district: 信義區","age:  7<br />price_unit: 347349<br />district: 信義區","age:  4<br />price_unit: 236253<br />district: 信義區","age:  4<br />price_unit: 256198<br />district: 信義區","age: 14<br />price_unit: 392390<br />district: 信義區","age:  4<br />price_unit: 269890<br />district: 信義區","age:  7<br />price_unit: 263341<br />district: 信義區","age:  7<br />price_unit: 321074<br />district: 信義區","age:  7<br />price_unit: 305362<br />district: 信義區","age:  7<br />price_unit: 356586<br />district: 信義區","age:  4<br />price_unit: 292712<br />district: 信義區","age: 16<br />price_unit: 251296<br />district: 信義區","age:  4<br />price_unit: 257678<br />district: 信義區","age:  4<br />price_unit: 289567<br />district: 信義區","age: 20<br />price_unit: 174935<br />district: 信義區","age:  6<br />price_unit: 304167<br />district: 信義區","age:  4<br />price_unit: 222247<br />district: 信義區","age: 16<br />price_unit: 257394<br />district: 信義區","age:  5<br />price_unit: 413374<br />district: 信義區","age:  6<br />price_unit: 431560<br />district: 信義區","age:  7<br />price_unit: 407609<br />district: 信義區","age:  7<br />price_unit: 236659<br />district: 信義區","age:  4<br />price_unit: 178430<br />district: 信義區","age:  7<br />price_unit: 226818<br />district: 信義區","age: 19<br />price_unit: 206838<br />district: 信義區","age:  4<br />price_unit: 250921<br />district: 信義區","age:  5<br />price_unit: 252566<br />district: 信義區","age:  8<br />price_unit: 408454<br />district: 信義區","age: 19<br />price_unit: 250209<br />district: 信義區","age:  7<br />price_unit: 300775<br />district: 信義區","age:  7<br />price_unit: 239058<br />district: 信義區","age:  4<br />price_unit: 361193<br />district: 信義區","age:  4<br />price_unit: 236025<br />district: 信義區","age: 24<br />price_unit: 244660<br />district: 信義區","age:  7<br />price_unit: 233418<br />district: 信義區","age:  9<br />price_unit: 272209<br />district: 信義區","age: 16<br />price_unit: 285489<br />district: 信義區","age:  7<br />price_unit: 373047<br />district: 信義區","age:  7<br />price_unit: 307752<br />district: 信義區","age:  4<br />price_unit: 294638<br />district: 信義區","age: 19<br />price_unit: 210485<br />district: 信義區","age: 23<br />price_unit: 227449<br />district: 信義區","age: 21<br />price_unit: 236475<br />district: 信義區","age:  6<br />price_unit: 377522<br />district: 信義區","age:  7<br />price_unit: 325680<br />district: 信義區","age:  8<br />price_unit: 395630<br />district: 信義區","age: 17<br />price_unit: 211802<br />district: 信義區","age: 24<br />price_unit: 248489<br />district: 信義區","age:  5<br />price_unit: 326531<br />district: 信義區","age:  6<br />price_unit: 453776<br />district: 信義區","age:  6<br />price_unit: 213697<br />district: 信義區","age: 24<br />price_unit: 220381<br />district: 信義區","age: 14<br />price_unit: 139257<br />district: 信義區","age: 13<br />price_unit: 303055<br />district: 信義區","age:  4<br />price_unit: 248354<br />district: 信義區","age:  7<br />price_unit: 249762<br />district: 信義區","age: 17<br />price_unit: 253820<br />district: 信義區","age:  8<br />price_unit: 373776<br />district: 信義區","age:  8<br />price_unit: 396345<br />district: 信義區","age:  6<br />price_unit: 280091<br />district: 信義區","age: 25<br />price_unit: 283150<br />district: 信義區","age:  4<br />price_unit: 320255<br />district: 信義區","age:  6<br />price_unit: 324069<br />district: 信義區","age: 23<br />price_unit: 194878<br />district: 信義區","age:  8<br />price_unit: 202780<br />district: 信義區"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(241,196,15,1)","opacity":1,"size":5.66929133858268,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(241,196,15,1)"}},"hoveron":"points","name":"信義區","legendgroup":"信義區","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null}],"layout":{"margin":{"t":53.7952755905512,"r":37.7952755905512,"b":79.3300712877889,"l":111.210519606593},"plot_bgcolor":"rgba(236,240,241,1)","paper_bgcolor":"rgba(255,255,255,1)","font":{"color":"rgba(52,73,94,1)","family":"STHeiti","size":19.9252801992528},"xaxis":{"domain":[0,1],"type":"linear","autorange":false,"range":[-1.51101585382596,45.1000082341768],"tickmode":"array","ticktext":["0","10","20","30","40"],"tickvals":[2.22044604925031e-16,10,20,30,40],"categoryorder":"array","categoryarray":["0","10","20","30","40"],"nticks":null,"ticks":"","tickcolor":null,"ticklen":5.66929133858268,"tickwidth":0,"showticklabels":true,"tickfont":{"color":"rgba(52,73,94,1)","family":"STHeiti","size":15.9402241594022},"tickangle":-0,"showline":true,"linecolor":"rgba(44,62,80,1)","linewidth":0.66417600664176,"showgrid":true,"gridcolor":"rgba(189,195,199,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"y","title":"<b> age <\/b>","titlefont":{"color":"rgba(52,73,94,1)","family":"STHeiti","size":19.9252801992528},"hoverformat":".2f"},"yaxis":{"domain":[0,1],"type":"linear","autorange":false,"range":[-8980.6809111592,760556.526132502],"tickmode":"array","ticktext":["0","200000","400000","600000"],"tickvals":[0,200000,400000,600000],"categoryorder":"array","categoryarray":["0","200000","400000","600000"],"nticks":null,"ticks":"","tickcolor":null,"ticklen":5.66929133858268,"tickwidth":0,"showticklabels":true,"tickfont":{"color":"rgba(52,73,94,1)","family":"STHeiti","size":15.9402241594022},"tickangle":-0,"showline":true,"linecolor":"rgba(44,62,80,1)","linewidth":0.66417600664176,"showgrid":true,"gridcolor":"rgba(189,195,199,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"x","title":"<b> price_unit <\/b>","titlefont":{"color":"rgba(52,73,94,1)","family":"STHeiti","size":19.9252801992528},"hoverformat":".2f"},"shapes":[{"type":"rect","fillcolor":null,"line":{"color":null,"width":0,"linetype":[]},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0,"y1":1}],"showlegend":true,"legend":{"bgcolor":"rgba(255,255,255,1)","bordercolor":"rgba(255,255,255,1)","borderwidth":1.88976377952756,"font":{"color":"rgba(52,73,94,1)","family":"STHeiti","size":15.9402241594022},"y":0.905511811023622},"annotations":[{"text":"district","x":1.02,"y":1,"showarrow":false,"ax":0,"ay":0,"font":{"color":"rgba(52,73,94,1)","family":"STHeiti","size":15.9402241594022},"xref":"paper","yref":"paper","textangle":-0,"xanchor":"left","yanchor":"bottom","legendTitle":true}],"hovermode":"closest","width":1000,"height":400,"barmode":"relative"},"config":{"doubleClick":"reset","modeBarButtonsToAdd":[{"name":"Collaborate","icon":{"width":1000,"ascent":500,"descent":-50,"path":"M487 375c7-10 9-23 5-36l-79-259c-3-12-11-23-22-31-11-8-22-12-35-12l-263 0c-15 0-29 5-43 15-13 10-23 23-28 37-5 13-5 25-1 37 0 0 0 3 1 7 1 5 1 8 1 11 0 2 0 4-1 6 0 3-1 5-1 6 1 2 2 4 3 6 1 2 2 4 4 6 2 3 4 5 5 7 5 7 9 16 13 26 4 10 7 19 9 26 0 2 0 5 0 9-1 4-1 6 0 8 0 2 2 5 4 8 3 3 5 5 5 7 4 6 8 15 12 26 4 11 7 19 7 26 1 1 0 4 0 9-1 4-1 7 0 8 1 2 3 5 6 8 4 4 6 6 6 7 4 5 8 13 13 24 4 11 7 20 7 28 1 1 0 4 0 7-1 3-1 6-1 7 0 2 1 4 3 6 1 1 3 4 5 6 2 3 3 5 5 6 1 2 3 5 4 9 2 3 3 7 5 10 1 3 2 6 4 10 2 4 4 7 6 9 2 3 4 5 7 7 3 2 7 3 11 3 3 0 8 0 13-1l0-1c7 2 12 2 14 2l218 0c14 0 25-5 32-16 8-10 10-23 6-37l-79-259c-7-22-13-37-20-43-7-7-19-10-37-10l-248 0c-5 0-9-2-11-5-2-3-2-7 0-12 4-13 18-20 41-20l264 0c5 0 10 2 16 5 5 3 8 6 10 11l85 282c2 5 2 10 2 17 7-3 13-7 17-13z m-304 0c-1-3-1-5 0-7 1-1 3-2 6-2l174 0c2 0 4 1 7 2 2 2 4 4 5 7l6 18c0 3 0 5-1 7-1 1-3 2-6 2l-173 0c-3 0-5-1-8-2-2-2-4-4-4-7z m-24-73c-1-3-1-5 0-7 2-2 3-2 6-2l174 0c2 0 5 0 7 2 3 2 4 4 5 7l6 18c1 2 0 5-1 6-1 2-3 3-5 3l-174 0c-3 0-5-1-7-3-3-1-4-4-5-6z"},"click":"function(gd) { \n        // is this being viewed in RStudio?\n        if (location.search == '?viewer_pane=1') {\n          alert('To learn about plotly for collaboration, visit:\\n https://cpsievert.github.io/plotly_book/plot-ly-for-collaboration.html');\n        } else {\n          window.open('https://cpsievert.github.io/plotly_book/plot-ly-for-collaboration.html', '_blank');\n        }\n      }"}],"cloud":false},"source":"A","attrs":{"9c69159fc3dc":{"x":{},"y":{},"colour":{},"type":"scatter"}},"cur_data":"9c69159fc3dc","visdat":{"9c69159fc3dc":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1}},"base_url":"https://plot.ly"},"evals":["config.modeBarButtonsToAdd.0.click"],"jsHooks":{"render":[{"code":"function(el, x) { var ctConfig = crosstalk.var('plotlyCrosstalkOpts').set({\"on\":\"plotly_click\",\"persistent\":false,\"dynamic\":false,\"selectize\":false,\"opacityDim\":0.2,\"selected\":{\"opacity\":1}}); }","data":null}]}}</script>
+
+</article></slide><slide class=''><hgroup><h2>學習資源</h2></hgroup><article >
+
+<ul>
+<li><p><a href='http://www.rstudio.com/wp-content/uploads/2015/03/ggplot2-cheatsheet.pdf' title=''>ggplot2 cheat sheet from RStudio Inc.</a></p></li>
+<li><p><a href='http://www.cookbook-r.com/Graphs/' title=''>Graphs with ggplot2</a></p></li>
+<li><p><a href='http://docs.ggplot2.org/current/index.html' title=''>ggplot2 官方文件</a></p></li>
+<li><p><a href='http://docs.ggplot2.org/current/scale_brewer.html' title=''>Rcolorbrewer調色盤</a></p></li>
+<li><p><a href='https://plot.ly/ggplot2/' title=''>Plotly ggplot2 Library</a></p></li>
+<li><p><a href='http://jkunst.com/highcharter/oldindex.html#shiny-integration' title=''>highcharter套件介紹</a></p></li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>掌握心法後，如何自行利用 R 解決問題</h2></hgroup><article  id="-r-">
+
+<ul>
+<li><p>了解自己的需求，詢問關鍵字與函數</p></li>
+<li><p><a href='http://www.meetup.com/Taiwan-R' title=''>Taiwan R User Group</a></p></li>
+<li><p><a href='https://www.ptt.cc/bbs/R_Language/index.html' title=''>ptt R_Language版</a></p></li>
+<li><p><a href='https://groups.google.com/forum/#!forum/taiwanruser' title=''>R軟體使用者論壇</a></p></li>
+<li><p><a href='http://stackoverflow.com/' title=''>StackOverflow</a></p></li>
+<li><p>歡迎來信 <a href='mailto:qazwsx36541472@gmail.com' title=''>qazwsx36541472@gmail.com</a> 與我一起交流！</p></li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>Thanks for listening</h2></hgroup><article  id="thanks-for-listening">
+
+<center>
+
+<img src='img/thx_1.png' width=850 align='center'></img>
+
+</center></article></slide>
+
+
+  <slide class="backdrop"></slide>
+
+</slides>
+
+<script src="R_EDA_Visualization_files/ioslides-13.5.1/js/modernizr.custom.45394.js"></script>
+<script src="R_EDA_Visualization_files/ioslides-13.5.1/js/prettify/prettify.js"></script>
+<script src="R_EDA_Visualization_files/ioslides-13.5.1/js/prettify/lang-r.js"></script>
+<script src="R_EDA_Visualization_files/ioslides-13.5.1/js/prettify/lang-yaml.js"></script>
+<script src="R_EDA_Visualization_files/ioslides-13.5.1/js/hammer.js"></script>
+<script src="R_EDA_Visualization_files/ioslides-13.5.1/js/slide-controller.js"></script>
+<script src="R_EDA_Visualization_files/ioslides-13.5.1/js/slide-deck.js"></script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+<!-- map slide visiblity events into shiny -->
+<script>
+  (function() {
+    if (window.jQuery) {
+       window.jQuery(document).on('slideleave', function(e) {
+         window.jQuery(e.target).trigger('hidden');
+      });
+       window.jQuery(document).on('slideenter', function(e) {
+         window.jQuery(e.target).trigger('shown');
+      });
+    }
+  })();
+</script>
+
+</body>
+</html>
