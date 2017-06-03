@@ -5,4 +5,7 @@ ehthumbs.db
 ._*
 # Icon?
 Thumbs.db
+
+# R lang
 *.Rproj
+.Rproj.user
