@@ -850,7 +850,26 @@ ggplotly(ans,height = 400,width = 1000)
 
 - 歡迎來信 <qazwsx36541472@gmail.com> 與我一起交流！
 
+
+## 本週作業
+
+### 請同學完成R語言翻轉系統以下章節：
+
+#### 必修
+
+- `03-RVisualization-03-ggplot2`
+
+#### 選修
+
+- `03-RVisualization-01-One-Variable-Visualization`
+- `03-RVisualization-02-Multiple-Variables-Visualization`
+- `03-RVisualization-04-Javascript-And-Maps`
+
+
+
 ##  Thanks for listening
+
+- [How to read json file in r](https://unityculture.github.io/PIXNET_workshop/DataETL.html#13)
 
 <center>
 <img src='img/thx_1.png' width=850 align='center'></img>
